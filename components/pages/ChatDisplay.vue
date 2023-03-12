@@ -1,10 +1,19 @@
 <script setup lang="ts">
+import { useScroll } from "@vueuse/core";
 import { ChatCompletionRequestMessage } from "openai";
 
 interface Props {
     messages: Array<ChatCompletionRequestMessage>;
 }
 const props = withDefaults(defineProps<Props>(), {});
+
+const el = ref<HTMLElement>();
+const { y } = useScroll(el);
+useResizeObserver(el, (entries) => {
+    const entry = entries[0];
+    const scrollHeight = entry.target.scrollHeight;
+    y.value = scrollHeight;
+});
 
 const chatClass = (role: string) => {
     return role === "assistant" ? "chat-start" : "chat-end";
@@ -16,7 +25,7 @@ const chatImageIconName = (role: string) => {
 </script>
 
 <template>
-    <div class="w-full h-full overflow-y-auto">
+    <div ref="el" class="w-full h-full overflow-y-auto">
         <div v-for="message in messages" class="chat" :class="chatClass(message.role)">
             <div class="chat-image avatar placeholder">
                 <div class="bg-neutral text-neutral-content rounded-full w-12">
