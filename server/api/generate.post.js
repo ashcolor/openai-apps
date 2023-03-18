@@ -1,11 +1,11 @@
 export default defineEventHandler(async (event) => {
     const messages = await readBody(event);
 
-    console.log(messages);
     const payload = {
         model: "gpt-3.5-turbo",
         messages: messages,
-        // temperature: 0.7,
+        // 温度
+        // temperature: 1.2,
         // top_p: 1,
         // frequency_penalty: 0,
         // presence_penalty: 0,
@@ -22,6 +22,7 @@ export default defineEventHandler(async (event) => {
         body: JSON.stringify(payload),
     });
 
+    console.log(response.body);
     const json = response.json();
     return json;
 });

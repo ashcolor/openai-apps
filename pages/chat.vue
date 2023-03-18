@@ -59,17 +59,18 @@ const onClickSend = () => {
             <ChatDisplay :messages="displayMessages"></ChatDisplay>
         </div>
         <div class="divider m-0"></div>
-        <div class="collapse">
-            <input type="checkbox" class="min-h-0" />
-            <div class="collapse-title min-h-0 p-0">
+        <!-- <div class="collapse collapse-open shrink-0">
+            <input type="checkbox" class="min-h-0" checked />
+            <div class="collapse-title min-h-fit p-0">
                 <Icon name="ic:baseline-arrow-drop-down"></Icon>
                 詳細設定
-            </div>
-            <div class="collapse-content p-0">
-                <div></div>
-            </div>
-        </div>
-        <div class="flex flex-row gap-2 overflow-auto">
+            </div> -->
+        <!-- <div class="collapse-content p-0"> -->
+        <SystemMessageSelect v-model="systemMessage"></SystemMessageSelect>
+        <!-- <SystemMessageSelectGroup v-model="systemMessage"></SystemMessageSelectGroup> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <div class="shrink-0 flex flex-row gap-2 overflow-x-auto">
             <span
                 v-for="message in SAMPLE_USER_MESSAGES"
                 class="btn btn-xs"

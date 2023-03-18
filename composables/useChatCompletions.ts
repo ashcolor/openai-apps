@@ -2,7 +2,7 @@ import { Ref } from "nuxt/dist/app/compat/capi";
 
 export const useChatCompletions = (messages: Ref<any>) => {
     const data = ref<any>([]);
-    const pending = ref<Boolean>(false);
+    const pending = ref<boolean>(false);
 
     const execute = async () => {
         const responseData = await $fetch("/api/generate", {
