@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Character {
+  id        Int    @id @default(autoincrement())
+  name      String
+  avatarSrc String
+  prompt    String
+  Chats      Chat[]
+}
+
+model Chat {
+  id          Int       @id @default(autoincrement())
+  Character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  Messages     Message[]
+}
+
+model Message {
+  id       Int    @id @default(autoincrement())
+  Chat     Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId   Int
+  role String
+  content  String
+}
