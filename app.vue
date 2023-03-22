@@ -7,7 +7,7 @@ useHead({
 <template>
     <div class="h-screen flex flex-col">
         <CustomHeader />
-        <div class="grow container mx-auto min-h-0">
+        <div class="grow min-h-0">
             <NuxtPage />
         </div>
         <CustomFooter />
