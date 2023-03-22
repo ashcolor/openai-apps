@@ -1,6 +1,11 @@
-# Nuxt 3 Minimal Starter
+# OpenAi API Apps
 
-##
+## ドキュメント
+
+-   [NuxtJS 3](https://nuxt.com/)
+-   [tailwindcss](https://tailwindcss.com/)
+-   [daisyUI](https://daisyui.com/)
+-   [iconify](https://iconify.design/)
 
 [icones]
 https://icones.js.org/
@@ -14,12 +19,6 @@ Make sure to install the dependencies:
 ```bash
 # yarn
 yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
 ```
 
 ## Development Server
@@ -27,21 +26,19 @@ pnpm install
 Start the development server on http://localhost:3000
 
 ```bash
-npm run dev
+yarn run dev
 ```
 
-## Production
+## Prisma
 
-Build the application for production:
+マイグレーション
 
 ```bash
-npm run build
+npx prisma migrate dev
 ```
 
-Locally preview production build:
+Prisma Studio の起動
 
 ```bash
-npm run preview
+npx prisma studio
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
