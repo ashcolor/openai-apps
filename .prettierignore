@@ -1,0 +1,8 @@
+package.json
+package-lock.json
+
+**/.nuxt
+**/.git
+**/.svn
+**/.hg
+**/node_modules
