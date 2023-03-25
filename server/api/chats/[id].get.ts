@@ -15,6 +15,12 @@ export default defineEventHandler(async (event) => {
         const chat = await prisma.chat.findUnique({
             select: {
                 characterId: true,
+                Character: {
+                    select: {
+                        name: true,
+                        avatarSrc: true,
+                    },
+                },
                 Messages: true,
             },
             where: {

@@ -23,9 +23,18 @@ const { data: characterOptions, pending, error, refresh } = await useFetch("/api
 const onClickAddButton = async () => {
     const character = await $fetch("/api/characters", {
         method: "POST",
+        body: {
+            name: DEFAULT_CHARACTER_NAME,
+            avatarSrc: DEFAULT_CHARACTER_AVATAR,
+            prompt: "",
+        },
     });
     await refresh();
 };
+
+defineExpose({
+    refresh,
+});
 </script>
 
 <template>
@@ -47,7 +56,7 @@ const onClickAddButton = async () => {
                 <span class="label-text">{{ option.name || "名称未設定" }}</span>
             </div>
         </label>
-        <button class="btn btn-xs btn-circle btn-outline" type="button" @click="onClickAddButton">
+        <button class="btn btn-xs btn-circle btn-outline" type="button" @click="onClickAddButton()">
             <Icon name="ic:twotone-plus" />
         </button>
     </div>

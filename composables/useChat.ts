@@ -1,3 +1,4 @@
+import { Chat } from "@prisma/client";
 import { Ref } from "nuxt/dist/app/compat/capi";
 import { ChatCompletionRequestMessage } from "openai";
 
@@ -7,7 +8,9 @@ export const useChat = async (chatId: Ref<number>) => {
 
     console.log(chatId.value);
 
-    const { data: chat, refresh } = await useFetch(computed(() => `/api/chats/${chatId.value}`));
+    const { data: chat, refresh } = await useFetch<Chat>(
+        computed(() => `/api/chats/${chatId.value}`)
+    );
 
     watch(
         chat,

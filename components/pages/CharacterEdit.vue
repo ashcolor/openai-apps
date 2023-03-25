@@ -1,18 +1,12 @@
 <script setup lang="ts">
-import { Characters } from ".prisma/client";
+import { Character } from ".prisma/client";
 
 interface Props {
     characterId: number;
-    name: string;
-    avatarSrc: string;
-    prompt: string;
 }
 const props = withDefaults(defineProps<Props>(), {});
 
 interface Emits {
-    (e: "update:name", value: string): void;
-    (e: "update:avatarSrc", value: string): void;
-    (e: "update:prompt", value: string): void;
     (e: "refreshChats"): void;
 }
 const emit = defineEmits<Emits>();
@@ -25,13 +19,19 @@ const {
     data: selectedCharacter,
     pending: p,
     refresh: selectedCharacterRefresh,
-} = await useFetch<Characters>(computed(() => `/api/characters/${props.characterId}`));
+} = await useFetch<Character>(computed(() => `/api/characters/${props.characterId}`));
 
-watch(selectedCharacter, () => {
-    name.value = selectedCharacter.value?.name || "";
-    avatarSrc.value = selectedCharacter.value?.avatarSrc || "";
-    prompt.value = selectedCharacter.value?.prompt || "";
-});
+watch(
+    selectedCharacter,
+    () => {
+        name.value = selectedCharacter.value?.name || "";
+        avatarSrc.value = selectedCharacter.value?.avatarSrc || "";
+        prompt.value = selectedCharacter.value?.prompt || "";
+    },
+    {
+        immediate: true,
+    }
+);
 
 const onClickSave = async () => {
     const character = await $fetch(`/api/characters/${props.characterId}`, {
@@ -42,8 +42,8 @@ const onClickSave = async () => {
             prompt: prompt.value,
         },
     });
-    // await characterOptionsRefresh();
     await selectedCharacterRefresh();
+    emit("refreshChats");
 };
 
 // const onClickDeleteButton = async () => {
@@ -84,9 +84,9 @@ const onClickSave = async () => {
                 class="textarea textarea-bordered grow"
             ></textarea>
             <button type="button" class="btn btn-outlinew-full" @click="onClickSave">保存</button>
-            <label class="label">
+            <!-- <label class="label">
                 <span class="label-text">削除</span>
-            </label>
+            </label> -->
             <!-- <button
                 type="button"
                 class="btn btn-error btn-outlinew-full"

@@ -11,10 +11,6 @@ const emit = defineEmits<Emits>();
 
 const isCharacterEditing = ref<boolean>(false);
 
-const characterName = ref<string>("名前");
-const characterAvatarSrc = ref<string>(DEFAULT_CHARACTER_AVATAR);
-const characterPrompt = ref<string>("");
-
 const userMessage = ref<string>("");
 
 const { chat, messages, pending, refresh, addUserMessage, deleteAllMessages } = await useChat(
@@ -46,6 +42,14 @@ const onClickSend = () => {
 const onClickClearButton = async () => {
     await deleteAllMessages();
 };
+
+const CharacterSelectRef = ref();
+
+const refreshAll = () => {
+    refresh();
+    emit("refreshChats");
+    CharacterSelectRef.value.refresh();
+};
 </script>
 
 <template>
@@ -53,12 +57,12 @@ const onClickClearButton = async () => {
         <div class="shrink-0 p-2 flex flex-row justify-center gap-4">
             <div class="avatar cursor-pointer">
                 <div class="w-12 rounded-full">
-                    <img :src="characterAvatarSrc || DEFAULT_CHARACTER_AVATAR" />
+                    <img :src="chat.Character.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
             <div class="grow align-middle grid items-center">
                 <p class="text-xl">
-                    {{ characterName }}
+                    {{ chat.Character.name || DEFAULT_CHARACTER_NAME }}
                 </p>
             </div>
             <button
@@ -84,7 +88,7 @@ const onClickClearButton = async () => {
             <div class="grow min-h-0 p-4">
                 <ChatDisplay
                     :messages="messages"
-                    :assistantAvatarSrc="characterAvatarSrc"
+                    :assistantAvatarSrc="chat.Character.avatarSrc"
                     :isAssistantThinking="pending"
                 >
                     <template v-slot:empty>
@@ -122,14 +126,11 @@ const onClickClearButton = async () => {
         </div>
         <div v-show="isCharacterEditing" class="grow p-4">
             <div class="h-full flex flex-col">
-                <CharacterSelect v-model="characterId"></CharacterSelect>
+                <CharacterSelect v-model="characterId" ref="CharacterSelectRef"></CharacterSelect>
                 <div class="divider m-0"></div>
                 <CharacterEdit
                     :characterId="characterId"
-                    v-model:name="characterName"
-                    v-model:avatarSrc="characterAvatarSrc"
-                    v-model:prompt="characterPrompt"
-                    @refreshChats="emit('refreshChats')"
+                    @refreshChats="refreshAll"
                     class="grow"
                 ></CharacterEdit>
             </div>
