@@ -1,5 +1,7 @@
-export const useChats = async () => {
-    const { data: chats, refresh } = await useFetch(`/api/chats/`);
+import { defineStore } from "pinia";
+
+export const useChatsStore = defineStore("chats", () => {
+    const { data: chats, refresh } = useFetch("/api/chats");
 
     const addChat = async (characterId?: number) => {
         const chat = await $fetch(`/api/chats`, {
@@ -19,4 +21,4 @@ export const useChats = async () => {
     };
 
     return { chats, refresh, addChat, deleteChat };
-};
+});

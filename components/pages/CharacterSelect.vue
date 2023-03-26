@@ -1,45 +1,29 @@
 <script setup lang="ts">
-interface Props {
-    modelValue: number;
-}
-const props = withDefaults(defineProps<Props>(), {});
+import { storeToRefs } from "pinia";
+import { useChatStore } from "~~/stores/useChatStore";
+import { useCharactersStore } from "~~/stores/useCharactersStore";
 
-interface Emits {
-    (e: "update:modelValue", value: number): void;
-}
-const emit = defineEmits<Emits>();
+const chatStore = useChatStore();
+const { chat } = storeToRefs(chatStore);
+const { setCharacter } = chatStore;
+const characterStore = useCharactersStore();
+const { characters } = storeToRefs(characterStore);
+const { addCharacter, deleteCharacter } = characterStore;
 
 const handleInput = computed({
-    set(val: number) {
-        emit("update:modelValue", val);
-    },
     get() {
-        return props.modelValue;
+        if (!chat.value) return -1;
+        return chat.value.characterId;
     },
-});
-
-const { data: characterOptions, pending, error, refresh } = await useFetch("/api/characters");
-
-const onClickAddButton = async () => {
-    const character = await $fetch("/api/characters", {
-        method: "POST",
-        body: {
-            name: DEFAULT_CHARACTER_NAME,
-            avatarSrc: DEFAULT_CHARACTER_AVATAR,
-            prompt: "",
-        },
-    });
-    await refresh();
-};
-
-defineExpose({
-    refresh,
+    async set(val: number) {
+        return setCharacter(val);
+    },
 });
 </script>
 
 <template>
     <div class="flex flex-row flex-wrap gap-2 justify-center place-items-center">
-        <label v-for="option in characterOptions" class="label p-0">
+        <label v-for="option in characters" class="label p-0">
             <div class="indicator cursor-pointer flex flex-row gap-2 place-items-center px-2">
                 <input
                     v-model="handleInput"
@@ -56,7 +40,7 @@ defineExpose({
                 <span class="label-text">{{ option.name || "名称未設定" }}</span>
             </div>
         </label>
-        <button class="btn btn-xs btn-circle btn-outline" type="button" @click="onClickAddButton()">
+        <button class="btn btn-xs btn-circle btn-outline" type="button" @click="addCharacter()">
             <Icon name="ic:twotone-plus" />
         </button>
     </div>

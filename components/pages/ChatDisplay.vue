@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { ChatCompletionRequestMessage } from "openai";
+import { storeToRefs } from "pinia";
+import { useChatStore } from "~~/stores/useChatStore";
 
-interface Props {
-    messages: Array<ChatCompletionRequestMessage>;
-    assistantAvatarSrc: string;
-    isAssistantThinking: boolean;
-}
-const props = withDefaults(defineProps<Props>(), {});
+const chatStore = useChatStore();
+const { chat, messages, pending } = storeToRefs(chatStore);
 
 const isEmpty = computed(() => {
-    return props.messages.length === 0 && !props.isAssistantThinking;
+    return messages.value?.length === 0 && !pending.value;
 });
 
 const el = ref<HTMLElement>();
@@ -38,17 +35,17 @@ const chatClass = (role: string) => {
                 <div class="w-12 rounded-full">
                     <img
                         v-if="message.role === 'assistant'"
-                        :src="assistantAvatarSrc || DEFAULT_CHARACTER_AVATAR"
+                        :src="chat?.Character.avatarSrc || DEFAULT_CHARACTER_AVATAR"
                     />
                     <img v-else :src="DEFAULT_USER_AVATAR" />
                 </div>
             </div>
             <div v-html="nl2br(message.content)" class="chat-bubble"></div>
         </div>
-        <div v-if="isAssistantThinking" class="chat" :class="chatClass('assistant')">
+        <div v-if="pending" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
-                    <img :src="assistantAvatarSrc || DEFAULT_CHARACTER_AVATAR" />
+                    <img :src="chat?.characterId.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
             <div class="chat-bubble">

@@ -1,32 +1,21 @@
 <script setup lang="ts">
-import { Character } from ".prisma/client";
+import { storeToRefs } from "pinia";
+import { useCharacterStore } from "~~/stores/useCharacterStore";
 
-interface Props {
-    characterId: number;
-}
-const props = withDefaults(defineProps<Props>(), {});
-
-interface Emits {
-    (e: "refreshChats"): void;
-}
-const emit = defineEmits<Emits>();
+const characterStore = useCharacterStore();
+const { character } = storeToRefs(characterStore);
+const { patchCharacter } = characterStore;
 
 const name = ref<string>("");
 const avatarSrc = ref<string>("");
 const prompt = ref<string>("");
 
-const {
-    data: selectedCharacter,
-    pending: p,
-    refresh: selectedCharacterRefresh,
-} = await useFetch<Character>(computed(() => `/api/characters/${props.characterId}`));
-
 watch(
-    selectedCharacter,
+    character,
     () => {
-        name.value = selectedCharacter.value?.name || "";
-        avatarSrc.value = selectedCharacter.value?.avatarSrc || "";
-        prompt.value = selectedCharacter.value?.prompt || "";
+        name.value = character.value?.name || "";
+        avatarSrc.value = character.value?.avatarSrc || "";
+        prompt.value = character.value?.prompt || "";
     },
     {
         immediate: true,
@@ -34,26 +23,12 @@ watch(
 );
 
 const onClickSave = async () => {
-    const character = await $fetch(`/api/characters/${props.characterId}`, {
-        method: "PATCH",
-        body: {
-            name: name.value,
-            avatarSrc: avatarSrc.value,
-            prompt: prompt.value,
-        },
+    await patchCharacter({
+        name: name.value,
+        avatarSrc: avatarSrc.value,
+        prompt: prompt.value,
     });
-    await selectedCharacterRefresh();
-    emit("refreshChats");
 };
-
-// const onClickDeleteButton = async () => {
-//     const character = await $fetch(`/api/characters/${props.characterId}`, {
-//         method: "DELETE",
-//     });
-//     // await characterOptionsRefresh();
-//     // selectedCharacterId.value = 1;
-//     emit("refreshChats");
-// };
 </script>
 
 <template>
@@ -83,7 +58,7 @@ const onClickSave = async () => {
                 placeholder="Type here"
                 class="textarea textarea-bordered grow"
             ></textarea>
-            <button type="button" class="btn btn-outlinew-full" @click="onClickSave">保存</button>
+            <button type="button" class="btn btn-outlinew-full" @click="onClickSave()">保存</button>
             <!-- <label class="label">
                 <span class="label-text">削除</span>
             </label> -->
