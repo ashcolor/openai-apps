@@ -1,62 +1,29 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useChatStore } from "~~/stores/useChatStore";
+import { useMessagesStore } from "~~/stores/useMessagesStore";
+import { useSystemStore } from "~~/stores/useSystemStore";
 
-const isCharacterEditing = ref<boolean>(false);
+const systemStore = useSystemStore();
+const { isCharacterEditing } = storeToRefs(systemStore);
 
 const userMessage = ref<string>("");
 
-const chatStore = useChatStore();
-const { chat, messages, pending } = storeToRefs(chatStore);
-const { addUserMessage, deleteAllMessages } = chatStore;
+const messagesStore = useMessagesStore();
+const { sendMessage } = messagesStore;
 
 const onClickSend = () => {
-    addUserMessage(userMessage.value);
+    sendMessage(userMessage.value);
     userMessage.value = "";
 };
 </script>
 
 <template>
     <div class="grow bg-base-200 flex flex-col">
-        <div class="shrink-0 p-2 flex flex-row justify-center gap-4">
-            <div class="avatar cursor-pointer">
-                <div class="w-12 rounded-full">
-                    <img :src="chat?.Character.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
-                </div>
-            </div>
-            <div class="grow align-middle grid items-center">
-                <p class="text-xl">
-                    {{ chat?.Character.name || DEFAULT_CHARACTER_NAME }}
-                </p>
-            </div>
-            <button
-                v-show="isCharacterEditing"
-                class="btn btn-square"
-                @click="isCharacterEditing = false"
-            >
-                <Icon name="ic:baseline-chat" width="24" height="24" />
-            </button>
-            <button
-                v-show="!isCharacterEditing"
-                class="btn btn-square"
-                @click="isCharacterEditing = true"
-            >
-                <Icon name="ic:baseline-person" width="24" height="24" />
-            </button>
-            <button class="btn btn-square" @click="deleteAllMessages()">
-                <Icon name="ic:round-auto-delete" width="24" height="24" />
-            </button>
-        </div>
+        <ChatMessageAreaHeader></ChatMessageAreaHeader>
         <div class="divider m-0"></div>
         <div v-show="!isCharacterEditing" class="grow min-h-0 flex flex-col">
             <div class="grow min-h-0 p-4">
-                <ChatDisplay>
-                    <template v-slot:empty>
-                        <button class="btn btn-wide" @click="addUserMessage('')">
-                            会話をはじめる
-                        </button>
-                    </template>
-                </ChatDisplay>
+                <ChatDisplay></ChatDisplay>
             </div>
             <div class="divider h-0 m-0"></div>
             <div class="p-4">
@@ -65,7 +32,7 @@ const onClickSend = () => {
                         <span
                             v-for="message in SIMULATION_GAME_SAMPLE_USER_MESSAGES"
                             class="btn btn-xs"
-                            @click="addUserMessage(message)"
+                            @click="sendMessage(message)"
                         >
                             {{ message }}
                         </span>

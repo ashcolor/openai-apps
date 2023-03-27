@@ -7,10 +7,5 @@
         </div>
         <ChatMessageArea></ChatMessageArea>
     </div>
+    <SettingsModal></SettingsModal>
 </template>
-
-<style scoped>
-[v-cloak] {
-    display: none;
-}
-</style>
