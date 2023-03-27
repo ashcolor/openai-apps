@@ -9,43 +9,9 @@ export const SAMPLE_USER_MESSAGES = [
     "JavaScriptでOpenAIのAPIをリクエストする方法を教えて",
 ];
 
-export const SIMULATION_GAME_SAMPLE_USER_MESSAGES = [
+export const TEMPLATE_USER_MESSAGES = [
     "自己紹介をして",
     "こんにちは",
     "久しぶり！元気にしてた？",
     "休みの日はいつも何をしているの？",
-];
-
-export const SIMULATION_GAME_DEFAULT_CHARACTERS = [
-    {
-        id: 1,
-        name: "キャラクター1",
-        avatarSrc: "",
-        prompt: "",
-    },
-    {
-        id: 2,
-        name: "キャラクター2",
-        avatarSrc: "",
-        prompt: "",
-    },
-    {
-        id: 3,
-        name: "キャラクター3",
-        avatarSrc: "",
-        prompt: "",
-    },
-    {
-        id: 4,
-        name: "キャラクター4",
-        avatarSrc: "",
-        prompt: "",
-    },
-
-    {
-        id: 5,
-        name: "キャラクター5",
-        avatarSrc: "",
-        prompt: "",
-    },
 ];

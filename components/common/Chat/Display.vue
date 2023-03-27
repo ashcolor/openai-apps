@@ -69,9 +69,7 @@ const chatClass = (role: string) => {
                     <img :src="chat?.characterId.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
-            <div class="chat-bubble">
-                {{ streamingMessage }}
-            </div>
+            <div v-html="nl2br(streamingMessage)" class="chat-bubble"></div>
         </div>
     </div>
     <div v-show="isEmpty" class="w-full h-full grid place-items-center">

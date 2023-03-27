@@ -2,7 +2,6 @@ import { defineStore, storeToRefs } from "pinia";
 import { useChatsStore } from "~~/stores/useChatsStore";
 import { useCharacterStore } from "./useCharacterStore";
 import { Chat } from "@prisma/client";
-import { useMessagesStore } from "./useMessagesStore";
 
 export const useChatStore = defineStore("chat", () => {
     const chatsStore = useChatsStore();

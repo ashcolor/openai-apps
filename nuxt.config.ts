@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
     modules: ["@nuxt/devtools", "@vueuse/nuxt", "@pinia/nuxt", "@nuxtjs/tailwindcss", "nuxt-icon"],
     components: {
-        dirs: ["~/components/pages", "~/components/uiParts"],
+        dirs: ["~/components/common", "~/components/pages", "~/components/parts"],
     },
     runtimeConfig: {
         public: {
