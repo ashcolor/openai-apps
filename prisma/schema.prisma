@@ -17,8 +17,8 @@ model Character {
 
 model Chat {
   id          Int       @id @default(autoincrement())
-  Character   Character @relation(fields: [characterId], references: [id])
-  characterId Int
+  Character   Character? @relation(fields: [characterId], references: [id])
+  characterId Int?
   Messages     Message[]
 }
 

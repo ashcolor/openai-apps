@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 import { useSystemStore } from "~~/stores/useSystemStore";
 import { useChatStore } from "~~/stores/useChatStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
+import { useCharacterStore } from "~~/stores/useCharacterStore";
 
 const systemStore = useSystemStore();
 const { userAvatarSrc } = storeToRefs(systemStore);
@@ -13,6 +14,9 @@ const { chat, pending } = storeToRefs(chatStore);
 const messagesStore = useMessagesStore();
 const { messages, streamingMessage } = storeToRefs(messagesStore);
 const { sendMessage } = messagesStore;
+
+const characterStore = useCharacterStore();
+const { character } = storeToRefs(characterStore);
 
 const isEmpty = computed(() => {
     return messages?.value?.length === 0;
@@ -44,7 +48,7 @@ const chatClass = (role: string) => {
                 <div class="w-12 rounded-full">
                     <img
                         v-if="message.role === 'assistant'"
-                        :src="chat?.Character.avatarSrc || DEFAULT_CHARACTER_AVATAR"
+                        :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR"
                     />
                     <img v-else :src="userAvatarSrc || DEFAULT_USER_AVATAR" />
                 </div>
@@ -55,7 +59,7 @@ const chatClass = (role: string) => {
         <div v-if="pending" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
-                    <img :src="chat?.characterId.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
+                    <img :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
             <div class="chat-bubble">
@@ -66,7 +70,7 @@ const chatClass = (role: string) => {
         <div v-if="streamingMessage" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
-                    <img :src="chat?.characterId.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
+                    <img :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
             <div v-html="nl2br(streamingMessage)" class="chat-bubble"></div>

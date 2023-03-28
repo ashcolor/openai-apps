@@ -1,4 +1,4 @@
-import { defineStore, storeToRefs } from "pinia";
+import { defineStore, skipHydrate, storeToRefs } from "pinia";
 import { useChatsStore } from "~~/stores/useChatsStore";
 import { useCharacterStore } from "./useCharacterStore";
 import { Chat } from "@prisma/client";
@@ -10,24 +10,25 @@ export const useChatStore = defineStore("chat", () => {
 
     const pending = ref<boolean>(false);
 
-    const selectedChatId = ref<number>(1);
-    const { data: chat, refresh } = useFetch<Chat>(
-        computed(() => `/api/chats/${selectedChatId.value}`)
-    );
-    refresh();
-
-    watch(
-        chat,
-        () => {
-            if (!chat.value) {
-            } else {
-                selectedCharacterId.value = chat.value.characterId;
-            }
-        },
+    const selectedChatId = useLocalStorage<number | null>("selectedChatId", null);
+    const {
+        data: chat,
+        execute,
+        refresh,
+    } = useFetch<Chat>(
+        computed(() => `/api/chats/${selectedChatId.value}`),
         {
-            immediate: true,
+            immediate: false,
         }
     );
+
+    watch(chat, () => {
+        selectedCharacterId.value = chat.value?.characterId || null;
+    });
+
+    if (selectedChatId.value) {
+        execute();
+    }
 
     const setCharacter = async (characterId: number) => {
         const character = await $fetch(`/api/chats/${selectedChatId.value}`, {
@@ -40,7 +41,7 @@ export const useChatStore = defineStore("chat", () => {
         chatsStore.refresh();
     };
     return {
-        selectedChatId,
+        selectedChatId: skipHydrate(selectedChatId),
         chat,
         pending,
         refresh,

@@ -5,22 +5,19 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
     const characterId = body.characterId;
 
-    if (!characterId) {
-        throw createError({
-            statusCode: 400,
-            statusMessage: "",
-        });
-    }
+    const data = body.characterId
+        ? {
+              Character: {
+                  connect: {
+                      id: characterId,
+                  },
+              },
+          }
+        : {};
 
     try {
         const chat = await prisma.chat.create({
-            data: {
-                Character: {
-                    connect: {
-                        id: characterId,
-                    },
-                },
-            },
+            data: data,
         });
         return chat;
     } catch (e) {

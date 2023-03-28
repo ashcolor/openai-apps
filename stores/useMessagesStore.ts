@@ -8,17 +8,25 @@ export const useMessagesStore = defineStore("messages", () => {
     const chatStore = useChatStore();
     const characterStore = useCharacterStore();
 
-    const { data: messages, refresh } = useFetch("/api/messages", {
+    const {
+        data: messages,
+        execute,
+        refresh,
+    } = useFetch("/api/messages", {
         params: {
             chatId: computed(() => chatStore.selectedChatId),
         },
+        immediate: false,
     });
-    refresh();
+
+    if (chatStore.selectedChatId) {
+        execute();
+    }
 
     const {
         message: streamingMessage,
         isStreaming,
-        execute,
+        execute: streamExecute,
     } = useChatCompletionsStream(
         computed(() => {
             const requestMessages = [];
@@ -52,7 +60,7 @@ export const useMessagesStore = defineStore("messages", () => {
     const sendMessage = async (content: string) => {
         await addMessage("user", content);
 
-        await execute();
+        await streamExecute();
         const tmpMessage = streamingMessage.value;
         streamingMessage.value = "";
 

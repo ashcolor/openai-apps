@@ -19,11 +19,11 @@ const { selectedChatId } = storeToRefs(chatStore);
             >
                 <div class="avatar">
                     <div class="w-12 rounded-full">
-                        <img :src="chat?.Character.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
+                        <img :src="chat?.Character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
                     </div>
                 </div>
                 <div class="grow shrink min-w-0">
-                    <div>{{ chat?.Character.name }}</div>
+                    <div>{{ chat?.Character?.name }}</div>
                     <div class="text-sm font-light truncate">
                         {{ chat?.Messages[0]?.content }}
                     </div>

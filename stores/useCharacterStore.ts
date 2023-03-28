@@ -9,7 +9,7 @@ export const useCharacterStore = defineStore("character", () => {
     const chatStore = useChatStore();
     const charactersStore = useCharactersStore();
 
-    const selectedCharacterId = ref<number>(1);
+    const selectedCharacterId = ref<number | null>(null);
     const {
         data: character,
         pending,

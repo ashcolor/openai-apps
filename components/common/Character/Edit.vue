@@ -32,7 +32,7 @@ const onClickSave = async () => {
 </script>
 
 <template>
-    <div class="grow flex flex-row gap-8">
+    <div>
         <div class="form-control">
             <label class="label">
                 <span class="label-text">Profile Picture</span>
@@ -59,16 +59,8 @@ const onClickSave = async () => {
                 class="textarea textarea-bordered grow"
             ></textarea>
             <button type="button" class="btn btn-outlinew-full" @click="onClickSave()">保存</button>
-            <!-- <label class="label">
-                <span class="label-text">削除</span>
-            </label> -->
-            <!-- <button
-                type="button"
-                class="btn btn-error btn-outlinew-full"
-                @click="onClickDeleteButton"
-            >
-                削除
-            </button> -->
+            <div class="divider"></div>
+            <CharacterDeleteButton></CharacterDeleteButton>
         </div>
     </div>
 </template>
