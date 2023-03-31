@@ -28,13 +28,21 @@ const { y } = useScroll(el);
 useMutationObserver(
     el,
     (mutations) => {
-        const scrollHeight = el.value?.scrollHeight ?? 0;
-        y.value = scrollHeight;
+        setScrollEnd();
     },
     {
         childList: true,
     }
 );
+
+watch(streamingMessage, () => {
+    setScrollEnd();
+});
+
+const setScrollEnd = () => {
+    const scrollHeight = el.value?.scrollHeight ?? 0;
+    y.value = scrollHeight;
+};
 
 const chatClass = (role: string) => {
     return role === "assistant" ? "chat-start" : "chat-end";
@@ -66,7 +74,6 @@ const chatClass = (role: string) => {
                 <TreeDotsAnimationImg></TreeDotsAnimationImg>
             </div>
         </div>
-
         <div v-if="streamingMessage" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
