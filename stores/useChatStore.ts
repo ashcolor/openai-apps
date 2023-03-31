@@ -1,4 +1,5 @@
 import { defineStore, skipHydrate, storeToRefs } from "pinia";
+import { useStorage } from "@vueuse/core";
 import { useChatsStore } from "~~/stores/useChatsStore";
 import { useCharacterStore } from "./useCharacterStore";
 import { Chat } from "@prisma/client";
@@ -10,7 +11,7 @@ export const useChatStore = defineStore("chat", () => {
 
     const pending = ref<boolean>(false);
 
-    const selectedChatId = useLocalStorage<number | null>("selectedChatId", null);
+    const selectedChatId = ref<number | null>(null);
     const {
         data: chat,
         execute,
