@@ -1,0 +1,20 @@
+version: "3.9"
+volumes:
+  db-store:
+services:
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: volume
+        source: db-store
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
