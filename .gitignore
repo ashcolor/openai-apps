@@ -10,3 +10,27 @@ dist
 # prisma
 prisma/dev.db
 prisma/dev.db-journal
+
+# Serverless Framework
+.serverless
+
+#Docker
+docker/db/data/
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+.terraform.lock.hcl
+terraform.tfvars
+.ssh
