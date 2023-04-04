@@ -1,44 +1,65 @@
 # OpenAi API Apps
 
+OpenAI API を使用したアプリケーション
+
 ## ドキュメント
 
 -   [NuxtJS 3](https://nuxt.com/)
+-   [Pinia](https://pinia.vuejs.org/core-concepts/)
 -   [tailwindcss](https://tailwindcss.com/)
 -   [daisyUI](https://daisyui.com/)
--   [iconify](https://iconify.design/)
+-   [icones](https://icones.js.org/)
+-   [Prisma](https://www.prisma.io/docs)
+-   [Serverless Framework](https://www.serverless.com/)
+-   [Terraform](https://www.terraform.io/)
 
-[icones]
-https://icones.js.org/
+## 手順
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
+### 初期設定
 
 ```bash
-# yarn
-yarn install
+make init
 ```
 
-## Development Server
+### ローカル環境立ち上げ
 
 Start the development server on http://localhost:3000
 
 ```bash
-yarn run dev
+make dev
 ```
 
-## Prisma
+### Prisma
 
 マイグレーション
 
 ```bash
-npx prisma migrate dev
+prisma migrate dev --name init
 ```
 
-Prisma Studio の起動
+### クラウド環境構築
+
+`terraform.tfvars`の作成
 
 ```bash
-npx prisma studio
+cp infra\terraform.tfvars.example infra\terraform.tfvars
 ```
+
+`terraform.tfvars`を本番用に書き換える
+
+```bash
+make tf-init
+make tf-apply
+```
+
+### デプロイ
+
+`.env`を本番用に書き換える
+
+```bash
+make deploy
+```
+
+> 環境変数を追加する場合は serverless.yml にも追加する必要がある
+
+## 参考
