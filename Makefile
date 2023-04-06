@@ -6,6 +6,7 @@ init:
 	docker compose up -d --build db
 
 dev:
+	@make up
 	yarn dev
 	prisma studio
 
