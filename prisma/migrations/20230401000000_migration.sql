@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Character" (
+CREATE TABLE "public"."Character" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "avatarSrc" TEXT NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE "Character" (
 );
 
 -- CreateTable
-CREATE TABLE "Chat" (
+CREATE TABLE "public"."Chat" (
     "id" SERIAL NOT NULL,
     "characterId" INTEGER,
 
@@ -17,7 +17,7 @@ CREATE TABLE "Chat" (
 );
 
 -- CreateTable
-CREATE TABLE "Message" (
+CREATE TABLE "public"."Message" (
     "id" SERIAL NOT NULL,
     "chatId" INTEGER NOT NULL,
     "role" TEXT NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE "Message" (
 );
 
 -- AddForeignKey
-ALTER TABLE "Chat" ADD CONSTRAINT "Chat_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "Character"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "public"."Chat" ADD CONSTRAINT "Chat_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "public"."Character"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Message" ADD CONSTRAINT "Message_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "Chat"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."Message" ADD CONSTRAINT "Message_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "public"."Chat"("id") ON DELETE CASCADE ON UPDATE CASCADE;

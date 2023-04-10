@@ -11,7 +11,8 @@ OpenAI API を使用したアプリケーション
 -   [icones](https://icones.js.org/)
 -   [Prisma](https://www.prisma.io/docs)
 -   [Serverless Framework](https://www.serverless.com/)
--   [Terraform](https://www.terraform.io/)
+-   [Supabase](https://app.supabase.com/project/xicccftxvthjqjbxhqnf)
+-   ~~[Terraform](https://www.terraform.io/)~~
 
 ## 手順
 
