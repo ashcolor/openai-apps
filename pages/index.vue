@@ -11,7 +11,3 @@ if (user.value) {
     });
 }
 </script>
-
-<template>
-    <div>aaa</div>
-</template>
