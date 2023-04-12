@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useToast, TYPE } from "vue-toastification";
+import * as pkg from "vue-toastification";
+const { useToast } = pkg;
 
 definePageMeta({
     layout: "signin",
