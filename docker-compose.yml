@@ -15,7 +15,7 @@ services:
         volume:
           nocopy: true
       - type: bind
-        source: ./prisma/migrations/init
+        source: ./prisma/migrations
         target: /docker-entrypoint-initdb.d
     environment:
       - POSTGRES_DB=${DB_DATABASE}

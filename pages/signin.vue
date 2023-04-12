@@ -1,0 +1,102 @@
+<script setup lang="ts">
+import { useToast, TYPE } from "vue-toastification";
+
+definePageMeta({
+    layout: "signin",
+});
+
+const user = useSupabaseUser();
+const supabase = useSupabaseClient();
+const toast = useToast();
+
+const loading = ref(false);
+const email = ref("");
+const password = ref("");
+
+const handleLogin = async () => {
+    try {
+        loading.value = true;
+        const { error } = await supabase.auth.signInWithPassword({
+            email: email.value,
+            password: password.value,
+        });
+        if (error) throw error;
+    } catch (error) {
+        console.error(error?.error_description || error?.message);
+        toast.error("ログインに失敗しました");
+    } finally {
+        loading.value = false;
+    }
+};
+
+watch(user, () => {
+    if (!user) return;
+    navigateTo({
+        path: "/profile",
+    });
+});
+</script>
+
+<template>
+    <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
+        <AppTItleAndDescription></AppTItleAndDescription>
+
+        <div class="card self-center flex">
+            <div class="card-body bg-base-100 p-16 space-y-3">
+                <h2 class="card-title text-2xl">Appにログイン</h2>
+                <form @submit.prevent="handleLogin">
+                    <div class="space-y-4">
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label">
+                                <span class="label-text font-medium">Email</span>
+                            </label>
+                            <input
+                                v-model="email"
+                                type="text"
+                                placeholder="メールアドレス"
+                                class="input input-bordered w-full"
+                            />
+                        </div>
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label">
+                                <span class="label-text font-medium">Password</span>
+                            </label>
+                            <input
+                                v-model="password"
+                                type="password"
+                                placeholder="パスワード"
+                                class="input input-bordered w-full"
+                            />
+                            <label class="label">
+                                <span class="label-text-alt"
+                                    ><a class="link link-primary link-hover"
+                                        >パスワードを忘れた場合はこちら</a
+                                    ></span
+                                >
+                            </label>
+                        </div>
+                        <!-- <div class="form-control flex flex-row">
+                            <label class="label cursor-pointer gap-2">
+                                <input type="checkbox" class="checkbox checkbox-sm" />
+                                <span class="label-text">Remember me</span>
+                            </label>
+                        </div> -->
+                        <div>
+                            <button
+                                type="submit"
+                                class="btn btn-block btn-primary"
+                                :value="loading ? 'Loading' : 'Send magic link'"
+                            >
+                                ログイン
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <span class="text-gray-500">アカウントを持っていない場合は&nbsp;</span>
+                    <NuxtLink to="/signup" class="link link-hover link-primary">新規登録</NuxtLink>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

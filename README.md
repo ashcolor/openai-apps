@@ -9,9 +9,11 @@ OpenAI API を使用したアプリケーション
 -   [tailwindcss](https://tailwindcss.com/)
 -   [daisyUI](https://daisyui.com/)
 -   [icones](https://icones.js.org/)
+-   [Vue Toastification](https://vue-toastification.maronato.dev/)
 -   [Prisma](https://www.prisma.io/docs)
 -   [Serverless Framework](https://www.serverless.com/)
--   [Terraform](https://www.terraform.io/)
+-   [Supabase](https://app.supabase.com/project/xicccftxvthjqjbxhqnf)
+-   ~~[Terraform](https://www.terraform.io/)~~
 
 ## 手順
 

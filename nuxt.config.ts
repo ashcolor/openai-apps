@@ -4,7 +4,14 @@ export default defineNuxtConfig({
         preset: "aws-lambda",
         serveStatic: true,
     },
-    modules: ["@nuxt/devtools", "@vueuse/nuxt", "@pinia/nuxt", "@nuxtjs/tailwindcss", "nuxt-icon"],
+    modules: [
+        "@nuxt/devtools",
+        "@vueuse/nuxt",
+        "@pinia/nuxt",
+        "@nuxtjs/tailwindcss",
+        "@nuxtjs/supabase",
+        "nuxt-icon",
+    ],
     components: {
         dirs: ["~/components/common", "~/components/pages", "~/components/parts"],
     },

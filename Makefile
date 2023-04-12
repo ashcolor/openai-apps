@@ -1,8 +1,10 @@
 .ONESHELL:
 
 init:
-	yarn install
+ifeq ("$(wildcard .env)", "")
 	cp .env.example .env
+endif
+	yarn install
 	docker compose up -d --build db
 
 dev:

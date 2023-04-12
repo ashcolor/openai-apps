@@ -1,11 +1,13 @@
 generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
 datasource postgres {
   provider = "postgres"
   url      = env("DB_URL")
+  schemas  = ["public"]
 }
 
 model Character {
@@ -13,20 +15,37 @@ model Character {
   name      String
   avatarSrc String
   prompt    String
-  Chats      Chat[]
+  Chats     Chat[]
+
+  @@schema("public")
 }
 
 model Chat {
-  id          Int       @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   Character   Character? @relation(fields: [characterId], references: [id])
   characterId Int?
-  Messages     Message[]
+  Messages    Message[]
+
+  @@schema("public")
 }
 
 model Message {
-  id       Int    @id @default(autoincrement())
-  Chat     Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  chatId   Int
-  role String
-  content  String
+  id      Int    @id @default(autoincrement())
+  Chat    Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId  Int
+  role    String
+  content String
+
+  @@schema("public")
+}
+
+model profiles {
+  id         String    @id @postgres.Uuid
+  updated_at DateTime? @postgres.Timestamptz(6)
+  email      String?
+  username   String?   @unique
+  avatar_url String?
+  website    String?
+
+  @@schema("public")
 }
