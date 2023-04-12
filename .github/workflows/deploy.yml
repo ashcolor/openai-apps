@@ -1,7 +1,7 @@
 name: Deploy Lambda
 on:
   push:
-    branches: [develop]
+    branches: [master]
 
 jobs:
   install:
