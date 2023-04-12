@@ -20,6 +20,8 @@ functions:
     environment:
       AUTH_USERNAME: ${env:AUTH_USERNAME}
       AUTH_PASSWORD: ${env:AUTH_PASSWORD}
+      SUPABASE_URL: ${env:SUPABASE_URL}
+      SUPABASE_KEY: ${env:SUPABASE_KEY}
       DB_URL: ${env:DB_URL}
     events:
       - httpApi:
