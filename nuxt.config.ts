@@ -15,4 +15,7 @@ export default defineNuxtConfig({
     components: {
         dirs: ["~/components/common", "~/components/pages", "~/components/parts"],
     },
+    build: {
+        transpile: ["vue-toastification"],
+    },
 });
