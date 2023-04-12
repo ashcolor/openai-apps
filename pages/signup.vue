@@ -27,9 +27,7 @@ const handleLogin = async () => {
         isSend.value = true;
     } catch (error) {
         console.error(error?.error_description || error?.message);
-        toast("ログインに失敗しました", {
-            type: TYPE.ERROR,
-        });
+        toast.error("登録に失敗しました");
     } finally {
         loading.value = false;
     }

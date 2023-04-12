@@ -23,9 +23,7 @@ const handleLogin = async () => {
         if (error) throw error;
     } catch (error) {
         console.error(error?.error_description || error?.message);
-        toast("ログインに失敗しました", {
-            type: TYPE.ERROR,
-        });
+        toast.error("ログインに失敗しました");
     } finally {
         loading.value = false;
     }
