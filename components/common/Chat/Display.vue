@@ -9,7 +9,7 @@ const systemStore = useSystemStore();
 const { userAvatarSrc } = storeToRefs(systemStore);
 
 const chatStore = useChatStore();
-const { chat, pending } = storeToRefs(chatStore);
+const { pending } = storeToRefs(chatStore);
 
 const messagesStore = useMessagesStore();
 const { messages, streamingMessage } = storeToRefs(messagesStore);
@@ -22,27 +22,20 @@ const isEmpty = computed(() => {
     return messages?.value?.length === 0;
 });
 
-const el = ref<HTMLElement>();
-const { y } = useScroll(el);
+const chatElement = ref<HTMLElement>();
+const { arrivedState, scrollBottom } = useScroll(chatElement, { behavior: "smooth" });
 
 useMutationObserver(
-    el,
-    (mutations) => {
-        setScrollEnd();
+    chatElement,
+    () => {
+        if (!arrivedState.bottom) return;
+        scrollBottom();
     },
     {
         childList: true,
+        subtree: true,
     }
 );
-
-watch(streamingMessage, () => {
-    setScrollEnd();
-});
-
-const setScrollEnd = () => {
-    const scrollHeight = el.value?.scrollHeight ?? 0;
-    y.value = scrollHeight;
-};
 
 const chatClass = (role: string) => {
     return role === "assistant" ? "chat-start" : "chat-end";
