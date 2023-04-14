@@ -43,7 +43,7 @@ const chatClass = (role: string) => {
 </script>
 
 <template>
-    <div v-show="!isEmpty" ref="el" class="w-full h-full overflow-y-auto">
+    <div v-show="!isEmpty" ref="chatElement" class="w-full h-full overflow-y-auto">
         <div v-for="message in messages" class="chat" :class="chatClass(message.role)">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
