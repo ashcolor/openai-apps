@@ -1,18 +1,14 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useSystemStore } from "~~/stores/useSystemStore";
-import { useChatStore } from "~~/stores/useChatStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
 import { useCharacterStore } from "~~/stores/useCharacterStore";
 
 const systemStore = useSystemStore();
 const { userAvatarSrc } = storeToRefs(systemStore);
 
-const chatStore = useChatStore();
-const { pending } = storeToRefs(chatStore);
-
 const messagesStore = useMessagesStore();
-const { messages, streamingMessage } = storeToRefs(messagesStore);
+const { messages, streamingMessage, isStreaming } = storeToRefs(messagesStore);
 const { sendMessage } = messagesStore;
 
 const characterStore = useCharacterStore();
@@ -56,24 +52,16 @@ const chatClass = (role: string) => {
             </div>
             <div v-html="nl2br(message.content)" class="chat-bubble"></div>
         </div>
-
-        <div v-if="pending" class="chat" :class="chatClass('assistant')">
+        <div v-if="isStreaming || streamingMessage" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
                     <img :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
-            <div class="chat-bubble">
+            <div v-if="streamingMessage" v-html="nl2br(streamingMessage)" class="chat-bubble"></div>
+            <div v-else class="chat-bubble">
                 <TreeDotsAnimationImg></TreeDotsAnimationImg>
             </div>
-        </div>
-        <div v-if="streamingMessage" class="chat" :class="chatClass('assistant')">
-            <div class="chat-image avatar">
-                <div class="w-12 rounded-full">
-                    <img :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
-                </div>
-            </div>
-            <div v-html="nl2br(streamingMessage)" class="chat-bubble"></div>
         </div>
     </div>
     <div v-show="isEmpty" class="w-full h-full grid place-items-center">
