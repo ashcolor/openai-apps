@@ -22,7 +22,6 @@ const handleLogin = async () => {
             email: email.value,
             password: password.value,
         });
-        // const { error } = await supabase.auth.signInWithOtp({ email: email.value });
         if (error) throw error;
         isSend.value = true;
     } catch (error) {

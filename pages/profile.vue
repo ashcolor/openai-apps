@@ -1,20 +1,6 @@
-<script setup lang="ts">
-const supabase = useSupabaseClient();
-
-const user = useSupabaseUser();
-console.log(user.value);
-
-if (!user.value) {
-    navigateTo({
-        path: "/signin",
-        // query: {
-        //     redirect_to: name.value,
-        //     type: type.value,
-        // },
-    });
-}
-</script>
+<script setup lang="ts"></script>
 <template>
-    <div></div>
-    <!-- <ProfileAccount></ProfileAccount> -->
+    <div class="w-full h-full flex justify-center">
+        <ProfileAccount></ProfileAccount>
+    </div>
 </template>
