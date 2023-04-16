@@ -11,9 +11,7 @@ OpenAI API を使用したアプリケーション
 -   [icones](https://icones.js.org/)
 -   [Vue Toastification](https://vue-toastification.maronato.dev/)
 -   [Prisma](https://www.prisma.io/docs)
--   [Serverless Framework](https://www.serverless.com/)
 -   [Supabase](https://app.supabase.com/project/xicccftxvthjqjbxhqnf)
--   ~~[Terraform](https://www.terraform.io/)~~
 
 ## 手順
 
@@ -39,21 +37,6 @@ make dev
 prisma migrate dev --name init
 ```
 
-### クラウド環境構築
-
-`terraform.tfvars`の作成
-
-```bash
-cp infra\terraform.tfvars.example infra\terraform.tfvars
-```
-
-`terraform.tfvars`を本番用に書き換える
-
-```bash
-make tf-init
-make tf-apply
-```
-
 ### デプロイ
 
 `.env`を本番用に書き換える
@@ -61,7 +44,5 @@ make tf-apply
 ```bash
 make deploy
 ```
-
-> 環境変数を追加する場合は serverless.yml にも追加する必要がある
 
 ## 参考

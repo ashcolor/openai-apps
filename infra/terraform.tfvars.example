@@ -1,7 +1,0 @@
-# Common
-prefix = "openai-api-apps"
-
-# RDS
-db_instance_class = "db.t4g.micro"
-db_database_name = "openai_api_apps"
-db_root_password = ""

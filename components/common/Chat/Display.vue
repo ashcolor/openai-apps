@@ -1,18 +1,14 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useSystemStore } from "~~/stores/useSystemStore";
-import { useChatStore } from "~~/stores/useChatStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
 import { useCharacterStore } from "~~/stores/useCharacterStore";
 
 const systemStore = useSystemStore();
 const { userAvatarSrc } = storeToRefs(systemStore);
 
-const chatStore = useChatStore();
-const { chat, pending } = storeToRefs(chatStore);
-
 const messagesStore = useMessagesStore();
-const { messages, streamingMessage } = storeToRefs(messagesStore);
+const { messages, streamingMessage, isStreaming } = storeToRefs(messagesStore);
 const { sendMessage } = messagesStore;
 
 const characterStore = useCharacterStore();
@@ -22,27 +18,20 @@ const isEmpty = computed(() => {
     return messages?.value?.length === 0;
 });
 
-const el = ref<HTMLElement>();
-const { y } = useScroll(el);
+const chatElement = ref<HTMLElement>();
+const { arrivedState, scrollBottom } = useScroll(chatElement, { behavior: "smooth" });
 
 useMutationObserver(
-    el,
-    (mutations) => {
-        setScrollEnd();
+    chatElement,
+    () => {
+        if (!arrivedState.bottom) return;
+        scrollBottom();
     },
     {
         childList: true,
+        subtree: true,
     }
 );
-
-watch(streamingMessage, () => {
-    setScrollEnd();
-});
-
-const setScrollEnd = () => {
-    const scrollHeight = el.value?.scrollHeight ?? 0;
-    y.value = scrollHeight;
-};
 
 const chatClass = (role: string) => {
     return role === "assistant" ? "chat-start" : "chat-end";
@@ -50,7 +39,7 @@ const chatClass = (role: string) => {
 </script>
 
 <template>
-    <div v-show="!isEmpty" ref="el" class="w-full h-full overflow-y-auto">
+    <div v-show="!isEmpty" ref="chatElement" class="w-full h-full overflow-y-auto">
         <div v-for="message in messages" class="chat" :class="chatClass(message.role)">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
@@ -63,24 +52,16 @@ const chatClass = (role: string) => {
             </div>
             <div v-html="nl2br(message.content)" class="chat-bubble"></div>
         </div>
-
-        <div v-if="pending" class="chat" :class="chatClass('assistant')">
+        <div v-if="isStreaming || streamingMessage" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
                     <img :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
-            <div class="chat-bubble">
+            <div v-if="streamingMessage" v-html="nl2br(streamingMessage)" class="chat-bubble"></div>
+            <div v-else class="chat-bubble">
                 <TreeDotsAnimationImg></TreeDotsAnimationImg>
             </div>
-        </div>
-        <div v-if="streamingMessage" class="chat" :class="chatClass('assistant')">
-            <div class="chat-image avatar">
-                <div class="w-12 rounded-full">
-                    <img :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
-                </div>
-            </div>
-            <div v-html="nl2br(streamingMessage)" class="chat-bubble"></div>
         </div>
     </div>
     <div v-show="isEmpty" class="w-full h-full grid place-items-center">
