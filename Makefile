@@ -15,7 +15,6 @@ dev:
 deploy:
 	yarn build
 	@make migrate
-	yarn sls deploy --verbose --stage prod
 
 ##### Docker #####
 up:
@@ -52,24 +51,3 @@ db:
 ##### Prisma #####
 migrate:
 	prisma migrate dev
-
-##### Terraform #####
-tf-init:
-	cd infra
-	terraform init
-
-tf-plan:
-	cd infra
-	terraform plan
-
-tf-apply:
-	cd infra
-	terraform apply
-
-tf-destroy:
-	cd infra
-	terraform destroy
-
-tf-import:
-	cd infra
-	terraform import
