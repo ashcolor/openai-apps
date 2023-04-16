@@ -1,7 +1,9 @@
 useDotenv: true
 
 service: openai-api-apps
+
 frameworkVersion: "3"
+
 provider:
   name: aws
   stage: dev
@@ -12,7 +14,6 @@ package:
   patterns:
     - "!**"
     - ".output/**"
-    - "infra/functions/authorizer.js"
 
 functions:
   NuxtSsrEngine:

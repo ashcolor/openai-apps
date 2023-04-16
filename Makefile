@@ -14,7 +14,8 @@ dev:
 
 deploy:
 	yarn build
-	yarn sls deploy
+	@make migrate
+	yarn sls deploy --verbose --stage prod
 
 ##### Docker #####
 up:
