@@ -6,10 +6,7 @@ const username = ref("");
 const website = ref("");
 const avatar_path = ref("");
 
-loading.value = true;
 const user = useSupabaseUser();
-
-console.log(JSON.stringify(user.value));
 
 let { data } = await supabase
     .from("profiles")
@@ -64,33 +61,52 @@ async function signOut() {
 </script>
 
 <template>
-    <form class="form-widget" @submit.prevent="updateProfile">
-        <div>
-            <label for="email">Email</label>
-            <input id="email" type="text" :value="user.email" class="input" disabled />
-        </div>
-        <div>
-            <label for="username">Username</label>
-            <input id="username" type="text" class="input" v-model="username" />
-        </div>
-        <div>
-            <label for="website">Website</label>
-            <input id="website" type="website" class="input" v-model="website" />
-        </div>
+    <div class="card self-center w-96 bg-base-100 shadow-xl">
+        <figure class="px-10 pt-10">
+            <img :src="avatar_path" alt="Shoes" class="rounded-xl" />
+        </figure>
+        <div class="card-body">
+            <form class="form-control space-y-6" @submit.prevent="updateProfile">
+                <h2 class="card-title">プロフィール</h2>
 
-        <div>
-            <button
-                type="submit"
-                class="btn btn-primary btn-block"
-                :value="loading ? 'Loading ...' : 'Update'"
-                :disabled="loading"
-            >
-                更新
-            </button>
-        </div>
+                <div class="space-y-4">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Email</span>
+                        </label>
+                        <input id="email" type="text" :value="user.email" class="input" disabled />
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Username</span>
+                        </label>
+                        <input type="text" class="input input-bordered" v-model="username" />
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Website</span>
+                        </label>
+                        <input type="text" class="input input-bordered" v-model="website" />
+                    </div>
+                </div>
 
-        <div>
+                <div class="card-actions">
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-block"
+                        :value="loading ? 'Loading ...' : 'Update'"
+                        :disabled="loading"
+                    >
+                        更新
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div></div>
+
+    <!-- <div>
             <button class="button block" @click="signOut" :disabled="loading">Sign Out</button>
-        </div>
-    </form>
+        </div> -->
 </template>
