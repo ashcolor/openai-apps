@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ChatCompletionRequestMessage } from "openai";
 
+definePageMeta({
+    middleware: ["auth"],
+});
+
 const systemMessage = ref<string>("");
 const userMessage = ref<string>("");
 const messageLogs = ref<Array<ChatCompletionRequestMessage>>([]);

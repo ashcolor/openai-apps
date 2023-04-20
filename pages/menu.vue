@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ["auth"],
+});
+
 const keyword = ref("こんにちは");
 const messages = ref<Array<any>>([]);
 const time = ref("夕食");
