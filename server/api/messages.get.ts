@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
     const prisma = new PrismaClient();
 
-    const messages = await prisma.message.findMany({
+    const messages = await prisma.messages.findMany({
         select: {
             role: true,
             content: true,

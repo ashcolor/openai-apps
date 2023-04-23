@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const character = await prisma.character.findUnique({
+        const character = await prisma.characters.findUnique({
             where: {
                 id: parseInt(id),
             },

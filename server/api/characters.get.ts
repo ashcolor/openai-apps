@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 
     const prisma = new PrismaClient();
 
-    const characters = await prisma.character.findMany({
+    const characters = await prisma.characters.findMany({
         where: {
             user_id: userId,
         },

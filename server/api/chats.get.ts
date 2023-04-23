@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 
     const prisma = new PrismaClient();
 
-    const chats = await prisma.chat.findMany({
+    const chats = await prisma.chats.findMany({
         select: {
             id: true,
             characterId: true,

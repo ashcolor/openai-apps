@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const chat = await prisma.chat.update({
+        const chat = await prisma.chats.update({
             where: {
                 id: parseInt(id),
             },

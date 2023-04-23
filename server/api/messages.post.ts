@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const message = await prisma.message.create({
+        const message = await prisma.messages.create({
             data: {
                 user_id: userId,
                 Chat: {

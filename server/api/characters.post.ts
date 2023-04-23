@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const character = await prisma.character.create({
+        const character = await prisma.characters.create({
             data: {
                 user_id: userId,
                 ...body,

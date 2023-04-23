@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const character = await prisma.character.update({
+        const character = await prisma.characters.update({
             where: {
                 id: parseInt(id),
             },

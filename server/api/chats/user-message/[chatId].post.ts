@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
             content: userContent,
         };
 
-        const userMessageObject = await prisma.message.create({
+        const userMessageObject = await prisma.messages.create({
             data: {
                 Chat: {
                     connect: {
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
             },
         });
 
-        const chat = await prisma.chat.findUnique({
+        const chat = await prisma.chats.findUnique({
             select: {
                 Character: true,
                 characterId: true,
@@ -93,7 +93,7 @@ export default defineEventHandler(async (event) => {
             content: json.choices[0].message.content,
         };
 
-        const message = await prisma.message.create({
+        const message = await prisma.messages.create({
             data: {
                 Chat: {
                     connect: {

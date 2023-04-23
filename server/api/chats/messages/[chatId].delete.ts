@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const message = await prisma.message.deleteMany({
+        const message = await prisma.messages.deleteMany({
             where: {
                 user_id: userId,
             },

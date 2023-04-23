@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const character = await prisma.character.delete({
+        const character = await prisma.characters.delete({
             where: {
                 id: parseInt(id),
             },

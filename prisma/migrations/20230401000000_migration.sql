@@ -1,32 +1,32 @@
 -- CreateTable
-CREATE TABLE "public"."Character" (
+CREATE TABLE "public"."characters" (
     "id" SERIAL NOT NULL,
     "user_id" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "avatarSrc" TEXT NOT NULL,
     "prompt" TEXT NOT NULL,
 
-    CONSTRAINT "Character_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "characters_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "public"."Chat" (
+CREATE TABLE "public"."chats" (
     "id" SERIAL NOT NULL,
     "user_id" UUID NOT NULL,
     "characterId" INTEGER,
 
-    CONSTRAINT "Chat_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "chats_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "public"."Message" (
+CREATE TABLE "public"."messages" (
     "id" SERIAL NOT NULL,
     "user_id" UUID NOT NULL,
     "chatId" INTEGER NOT NULL,
     "role" TEXT NOT NULL,
     "content" TEXT NOT NULL,
 
-    CONSTRAINT "Message_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "messages_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -45,7 +45,7 @@ CREATE TABLE "public"."profiles" (
 CREATE UNIQUE INDEX "profiles_username_key" ON "public"."profiles"("username");
 
 -- AddForeignKey
-ALTER TABLE "public"."Chat" ADD CONSTRAINT "Chat_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "public"."Character"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "public"."chats" ADD CONSTRAINT "chats_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "public"."characters"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."Message" ADD CONSTRAINT "Message_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "public"."Chat"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."messages" ADD CONSTRAINT "messages_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "public"."chats"("id") ON DELETE CASCADE ON UPDATE CASCADE;

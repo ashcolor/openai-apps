@@ -10,31 +10,31 @@ datasource postgres {
   schemas    = ["public"]
 }
 
-model Character {
+model characters {
   id        Int    @id @default(autoincrement())
   user_id    String @postgres.Uuid
   name      String
   avatarSrc String
   prompt    String
-  Chats     Chat[]
+  Chats     chats[]
 
   @@schema("public")
 }
 
-model Chat {
+model chats {
   id          Int        @id @default(autoincrement())
   user_id      String     @postgres.Uuid
-  Character   Character? @relation(fields: [characterId], references: [id])
+  Character   characters? @relation(fields: [characterId], references: [id])
   characterId Int?
-  Messages    Message[]
+  Messages    messages[]
 
   @@schema("public")
 }
 
-model Message {
+model messages {
   id      Int    @id @default(autoincrement())
   user_id  String @postgres.Uuid
-  Chat    Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  Chat    chats   @relation(fields: [chatId], references: [id], onDelete: Cascade)
   chatId  Int
   role    String
   content String

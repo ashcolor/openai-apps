@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const chat = await prisma.chat.delete({
+        const chat = await prisma.chats.delete({
             where: {
                 id: parseInt(id),
             },
