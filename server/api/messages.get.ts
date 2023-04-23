@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
         },
         where: {
             user_id: userId,
-            chatId: chatId,
+            chat_id: chatId,
         },
         orderBy: {
             id: "asc",

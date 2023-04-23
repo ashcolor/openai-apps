@@ -19,7 +19,7 @@ const { selectedChatId } = storeToRefs(chatStore);
             >
                 <div class="avatar">
                     <div class="w-12 rounded-full">
-                        <img :src="chat?.Character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
+                        <img :src="chat?.Character?.avatar_src || DEFAULT_CHARACTER_AVATAR" />
                     </div>
                 </div>
                 <div class="grow shrink min-w-0">

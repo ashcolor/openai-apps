@@ -55,7 +55,7 @@ const chatClass = (role: string) => {
         <div v-if="isStreaming || streamingMessage" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
-                    <img :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR" />
+                    <img :src="character?.avatar_src || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
             <div v-if="streamingMessage" v-html="nl2br(streamingMessage)" class="chat-bubble"></div>

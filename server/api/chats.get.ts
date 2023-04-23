@@ -8,11 +8,11 @@ export default defineEventHandler(async (event) => {
     const chats = await prisma.chats.findMany({
         select: {
             id: true,
-            characterId: true,
+            character_id: true,
             Character: {
                 select: {
                     name: true,
-                    avatarSrc: true,
+                    avatar_src: true,
                 },
             },
             Messages: {

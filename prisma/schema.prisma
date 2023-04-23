@@ -14,7 +14,7 @@ model characters {
   id        Int    @id @default(autoincrement())
   user_id    String @postgres.Uuid
   name      String
-  avatarSrc String
+  avatar_src String
   prompt    String
   Chats     chats[]
 
@@ -24,8 +24,8 @@ model characters {
 model chats {
   id          Int        @id @default(autoincrement())
   user_id      String     @postgres.Uuid
-  Character   characters? @relation(fields: [characterId], references: [id])
-  characterId Int?
+  Character   characters? @relation(fields: [character_id], references: [id])
+  character_id Int?
   Messages    messages[]
 
   @@schema("public")
@@ -34,8 +34,8 @@ model chats {
 model messages {
   id      Int    @id @default(autoincrement())
   user_id  String @postgres.Uuid
-  Chat    chats   @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  chatId  Int
+  Chat    chats   @relation(fields: [chat_id], references: [id], onDelete: Cascade)
+  chat_id  Int
   role    String
   content String
 

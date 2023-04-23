@@ -1,5 +1,4 @@
 import { defineStore, skipHydrate, storeToRefs } from "pinia";
-import { useStorage } from "@vueuse/core";
 import { useChatsStore } from "~~/stores/useChatsStore";
 import { useCharacterStore } from "./useCharacterStore";
 import { Chat } from "@prisma/client";
@@ -35,7 +34,7 @@ export const useChatStore = defineStore("chat", () => {
         const character = await $fetch(`/api/chats/${selectedChatId.value}`, {
             method: "PATCH",
             body: {
-                characterId: characterId,
+                character_id: characterId,
             },
         });
         refresh();

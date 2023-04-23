@@ -3,9 +3,9 @@ import { PrismaClient } from "@prisma/client";
 export default defineEventHandler(async (event) => {
     const userId = event.context.userId;
     const body = await readBody(event);
-    const characterId = body.characterId;
+    const characterId = body.character_id;
 
-    const data = body.characterId
+    const data = characterId
         ? {
               Character: {
                   connect: {

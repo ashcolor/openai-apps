@@ -25,7 +25,7 @@ watch(
 const onClickSave = async () => {
     await patchCharacter({
         name: name.value,
-        avatarSrc: avatarSrc.value,
+        avatar_src: avatarSrc.value,
         prompt: prompt.value,
     });
 };
