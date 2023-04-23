@@ -6,6 +6,9 @@ ifeq ("$(wildcard .env)", "")
 endif
 	yarn install
 	docker compose up -d --build db
+	sleep 30
+	@make migrate
+	@make seed
 
 dev:
 	@make up
@@ -51,3 +54,6 @@ db:
 ##### Prisma #####
 migrate:
 	prisma migrate dev
+	prisma generate
+seed:
+	prisma db seed
