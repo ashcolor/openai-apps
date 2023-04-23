@@ -8,26 +8,21 @@ const avatar_path = ref("");
 
 const user = useSupabaseUser();
 
-let { data } = await supabase
-    .from("profiles")
-    .select(`username, website, avatar_url`)
-    .eq("id", user.value.id)
-    .single();
+const { data: profile, execute, refresh } = await useFetch(`/api/profiles`);
 
-if (data) {
-    username.value = data.username;
-    website.value = data.website;
-    avatar_path.value = data.avatar_url;
+if (profile) {
+    username.value = profile.value.username;
+    website.value = profile.value.website;
+    avatar_path.value = profile.value.avatar_url;
 }
 
 loading.value = false;
 
-async function updateProfile() {
+const updateProfile = async () => {
     try {
         loading.value = true;
         const user = useSupabaseUser();
-
-        const updates = {
+        const body = {
             id: user.value.id,
             username: username.value,
             website: website.value,
@@ -35,29 +30,18 @@ async function updateProfile() {
             updated_at: new Date(),
         };
 
-        let { error } = await supabase.from("profiles").upsert(updates, {
-            returning: "minimal", // Don't return the value after inserting
+        const profile = await $fetch(`/api/profiles`, {
+            method: "PATCH",
+            body,
         });
-        if (error) throw error;
-    } catch (error) {
-        alert(error.message);
-    } finally {
-        loading.value = false;
-    }
-}
 
-async function signOut() {
-    try {
-        loading.value = true;
-        let { error } = await supabase.auth.signOut();
-        if (error) throw error;
-        user.value = null;
+        // if (error) throw error;
     } catch (error) {
         alert(error.message);
     } finally {
         loading.value = false;
     }
-}
+};
 </script>
 
 <template>
@@ -103,10 +87,4 @@ async function signOut() {
             </form>
         </div>
     </div>
-
-    <div></div>
-
-    <!-- <div>
-            <button class="button block" @click="signOut" :disabled="loading">Sign Out</button>
-        </div> -->
 </template>
