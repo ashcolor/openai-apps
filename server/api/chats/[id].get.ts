@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
                 Character: {
                     select: {
                         name: true,
-                        avatarSrc: true,
+                        avatar_src: true,
                     },
                 },
                 Messages: true,
