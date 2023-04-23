@@ -15,7 +15,7 @@ const { selectedChatId } = storeToRefs(chatStore);
         <li v-for="chat in chats" @click="selectedChatId = chat.id">
             <div
                 class="w-full flex flex-row flex-nowrap"
-                :class="{ active: selectedChatId === chat.id }"
+                :class="{ 'bg-base-300': selectedChatId === chat.id }"
             >
                 <div class="avatar">
                     <div class="w-12 rounded-full">
