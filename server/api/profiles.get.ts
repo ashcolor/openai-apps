@@ -5,11 +5,16 @@ export default defineEventHandler(async (event) => {
 
     const prisma = new PrismaClient();
 
-    const characters = await prisma.character.findMany({
+    const profile = await prisma.profiles.findFirst({
+        select: {
+            id: true,
+            username: true,
+            website: true,
+        },
         where: {
-            user_id: userId,
+            id: userId,
         },
     });
 
-    return characters;
+    return profile;
 });

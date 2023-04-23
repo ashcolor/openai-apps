@@ -1,8 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
-    const prisma = new PrismaClient();
+    const userId = event.context.userId;
     const query = getQuery(event);
+    const chatId = parseInt(query.chatId);
+
+    const prisma = new PrismaClient();
 
     const messages = await prisma.message.findMany({
         select: {
@@ -10,7 +13,8 @@ export default defineEventHandler(async (event) => {
             content: true,
         },
         where: {
-            chatId: parseInt(query.chatId),
+            user_id: userId,
+            chatId: chatId,
         },
         orderBy: {
             id: "asc",

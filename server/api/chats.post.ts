@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
-    const prisma = new PrismaClient();
+    const userId = event.context.userId;
     const body = await readBody(event);
     const characterId = body.characterId;
 
@@ -15,12 +15,18 @@ export default defineEventHandler(async (event) => {
           }
         : {};
 
+    const prisma = new PrismaClient();
+
     try {
         const chat = await prisma.chat.create({
-            data: data,
+            data: {
+                user_id: userId,
+                ...data,
+            },
         });
         return chat;
     } catch (e) {
+        console.log(e);
         throw createError({
             statusCode: 400,
             statusMessage: "取得に失敗しました",

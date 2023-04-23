@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
-    const prisma = new PrismaClient();
     const id = event.context.params?.id;
 
     if (!id) {
@@ -11,6 +10,8 @@ export default defineEventHandler(async (event) => {
         });
     }
 
+    const prisma = new PrismaClient();
+
     try {
         const chat = await prisma.chat.delete({
             where: {
@@ -19,6 +20,7 @@ export default defineEventHandler(async (event) => {
         });
         return chat;
     } catch (e) {
+        console.log(e);
         throw createError({
             statusCode: 400,
             statusMessage: "取得に失敗しました",
