@@ -76,7 +76,6 @@ router.delete(
     defineEventHandler(async (event) => {
         const chatId = parseInt(event.context.params?.chatId || "");
 
-        log;
         if (!chatId) {
             throw createError({
                 statusCode: 400,
