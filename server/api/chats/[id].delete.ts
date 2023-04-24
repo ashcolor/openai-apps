@@ -13,24 +13,14 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const chat = await prisma.chats.findUnique({
-            select: {
-                character_id: true,
-                Character: {
-                    select: {
-                        name: true,
-                        avatar_src: true,
-                    },
-                },
-                Messages: true,
-            },
+        const chat = await prisma.chats.delete({
             where: {
                 id: parseInt(id),
             },
         });
         return chat;
     } catch (e) {
-        console.error(e);
+        console.log(e);
         throw createError({
             statusCode: 400,
             statusMessage: "取得に失敗しました",
