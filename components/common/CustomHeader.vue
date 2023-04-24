@@ -23,7 +23,7 @@ const onClickLogout = async () => {
                 >
                     <li>
                         <label>
-                            <NuxtLink to="/simulation-game">チャット</NuxtLink>
+                            <NuxtLink to="/">チャット</NuxtLink>
                         </label>
                     </li>
                     <div class="divider"></div>
