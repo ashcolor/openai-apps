@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
-    const chatId = parseInt(event.context.params?.id || "");
+    const id = parseInt(event.context.params?.id || "");
 
-    if (!chatId) {
+    if (!id) {
         throw createError({
             statusCode: 400,
             statusMessage: "",
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     try {
         const message = await prisma.messages.deleteMany({
             where: {
-                chat_id: chatId,
+                chat_id: id,
             },
         });
 
