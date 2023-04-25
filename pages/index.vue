@@ -20,8 +20,22 @@ const { character } = storeToRefs(characterStore);
 
 <template>
     <div class="h-full flex flex-row">
-        <div class="shrink-0 w-72">
+        <div class="shrink-0 w-72 flex flex-col place-content-center">
+            <div class="w-full text-center">
+                <ChatListNewButton></ChatListNewButton>
+            </div>
             <ChatList></ChatList>
+            <div class="divider m-0"></div>
+            <ul class="menu bg-base-100">
+                <li>
+                    <NuxtLink to="/"><Icon name="bi:chat-left-text"></Icon>チャット</NuxtLink>
+                </li>
+                <li>
+                    <NuxtLink to="/characters"
+                        ><Icon name="bi:person-badge"></Icon>キャラクター</NuxtLink
+                    >
+                </li>
+            </ul>
         </div>
         <div v-if="!selectedChatId" class="grow bg-base-200 grid place-items-center">
             <ChatNewButton></ChatNewButton>

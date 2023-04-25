@@ -5,7 +5,7 @@ import { useChatStore } from "~~/stores/useChatStore";
 
 const chatsStore = useChatsStore();
 const { chats } = storeToRefs(chatsStore);
-const { addChat, deleteChat } = chatsStore;
+const { deleteChat } = chatsStore;
 const chatStore = useChatStore();
 const { selectedChatId } = storeToRefs(chatStore);
 </script>
@@ -35,7 +35,6 @@ const { selectedChatId } = storeToRefs(chatStore);
                 </div>
             </div>
         </li>
-        <button class="btn btn-sm btn-outline" @click="addChat()">新しいチャット</button>
     </ul>
 </template>
 
