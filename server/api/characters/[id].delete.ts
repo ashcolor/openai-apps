@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
-    const id = event.context.params?.id;
+    const id = parseInt(event.context.params?.id ?? "");
 
     if (!id) {
         throw createError({
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     try {
         const character = await prisma.characters.delete({
             where: {
-                id: parseInt(id),
+                id,
             },
         });
         return character;

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
-    const id = event.context.params?.id;
+    const id = parseInt(event.context.params?.id ?? "");
 
     if (!id) {
         throw createError({
@@ -13,22 +13,12 @@ export default defineEventHandler(async (event) => {
     const prisma = new PrismaClient();
 
     try {
-        const chat = await prisma.chats.findUnique({
-            select: {
-                character_id: true,
-                Character: {
-                    select: {
-                        name: true,
-                        avatar_src: true,
-                    },
-                },
-                Messages: true,
-            },
+        const character = await prisma.characters.findUnique({
             where: {
-                id: parseInt(id),
+                id,
             },
         });
-        return chat;
+        return character;
     } catch (e) {
         console.error(e);
         throw createError({
