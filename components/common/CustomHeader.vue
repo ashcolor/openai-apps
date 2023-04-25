@@ -5,7 +5,7 @@ const onClickLogout = async () => {
     await supabase.auth.signOut();
 
     return navigateTo({
-        path: "/signin",
+        path: "/auth/login",
     });
 };
 </script>

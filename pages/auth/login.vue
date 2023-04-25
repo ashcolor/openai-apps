@@ -2,7 +2,7 @@
 import { useToast } from "vue-toastification/dist/index.mjs";
 
 definePageMeta({
-    layout: "signin",
+    layout: "auth",
 });
 
 const user = useSupabaseUser();
@@ -39,7 +39,7 @@ watch(user, () => {
 
 <template>
     <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-        <AppTItleAndDescription></AppTItleAndDescription>
+        <AuthAppTItleAndDescription></AuthAppTItleAndDescription>
 
         <div class="card self-center flex">
             <div class="card-body bg-base-100 p-16 space-y-3">
@@ -94,7 +94,9 @@ watch(user, () => {
                 </form>
                 <div>
                     <span class="text-gray-500">アカウントを持っていない場合は&nbsp;</span>
-                    <NuxtLink to="/signup" class="link link-hover link-primary">新規登録</NuxtLink>
+                    <NuxtLink to="/auth/signup" class="link link-hover link-primary"
+                        >新規登録</NuxtLink
+                    >
                 </div>
             </div>
         </div>
