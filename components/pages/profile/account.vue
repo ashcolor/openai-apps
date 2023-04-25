@@ -1,5 +1,7 @@
 <script setup>
-const supabase = useSupabaseClient();
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const loading = ref(true);
 const username = ref("");
@@ -34,10 +36,10 @@ const updateProfile = async () => {
             method: "PATCH",
             body,
         });
-
-        // if (error) throw error;
+        toast.info("保存しました");
     } catch (error) {
         alert(error.message);
+        toast.error("保存に失敗しました");
     } finally {
         loading.value = false;
     }
@@ -47,8 +49,13 @@ const updateProfile = async () => {
 <template>
     <div class="card self-center w-96 bg-base-100 shadow-xl">
         <figure class="px-10 pt-10">
-            <img :src="avatar_path" alt="Shoes" class="rounded-xl" />
+            <div class="chat-image avatar">
+                <div class="w-24 rounded-full ring-1 ring-base-300">
+                    <img :src="avatar_path || DEFAULT_USER_AVATAR" />
+                </div>
+            </div>
         </figure>
+
         <div class="card-body">
             <form class="form-control space-y-6" @submit.prevent="updateProfile">
                 <h2 class="card-title">プロフィール</h2>

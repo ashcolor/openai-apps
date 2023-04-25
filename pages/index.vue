@@ -27,17 +27,6 @@ const { character } = storeToRefs(characterStore);
                 <ChatListNewButton></ChatListNewButton>
             </div>
             <ChatList></ChatList>
-            <div class="divider m-0"></div>
-            <ul class="menu bg-base-100">
-                <li>
-                    <NuxtLink to="/"><Icon name="bi:chat-left-text"></Icon>チャット</NuxtLink>
-                </li>
-                <li>
-                    <NuxtLink to="/characters"
-                        ><Icon name="bi:person-badge"></Icon>キャラクター</NuxtLink
-                    >
-                </li>
-            </ul>
         </div>
 
         <div v-if="!selectedChatId" class="grow bg-base-200 grid place-items-center">
@@ -99,5 +88,4 @@ const { character } = storeToRefs(characterStore);
             </template>
         </div>
     </div>
-    <SettingsModal></SettingsModal>
 </template>

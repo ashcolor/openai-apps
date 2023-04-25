@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
     const profile = await prisma.profiles.findFirst({
         select: {
             id: true,
+            avatar_url: true,
             username: true,
             website: true,
         },
