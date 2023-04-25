@@ -14,12 +14,12 @@ const onClickSend = () => {
 
 <template>
     <div class="flex flex-col">
-        <MessageTextarea
+        <ChatMessageTextarea
             class="textarea w-full"
             placeholder="Enterで送信"
             v-model="userMessage"
             @onKeyDownEnter="onClickSend"
-        ></MessageTextarea>
+        ></ChatMessageTextarea>
         <div class="w-full">
             <button class="btn btn-sm w-full" @click="onClickSend">送信</button>
         </div>
