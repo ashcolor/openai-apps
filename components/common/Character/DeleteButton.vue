@@ -15,5 +15,7 @@ const onClick = () => {
 </script>
 
 <template>
-    <button type="button" class="btn btn-error btn-outlinew-full" @click="onClick()">削除</button>
+    <button type="button" class="btn btn-sm btn-text btn-error btn-outline" @click="onClick()">
+        削除
+    </button>
 </template>

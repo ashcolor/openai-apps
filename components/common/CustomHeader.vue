@@ -22,11 +22,11 @@ const onClickLogout = async () => {
                     class="dropdown-content menu p-2 shadow bg-base-100 text-base-content rounded-box w-52"
                 >
                     <li>
-                        <label>
-                            <NuxtLink to="/">チャット</NuxtLink>
-                        </label>
+                        <NuxtLink to="/">チャット</NuxtLink>
                     </li>
-                    <div class="divider"></div>
+                    <li>
+                        <NuxtLink to="/characters">キャラクター</NuxtLink>
+                    </li>
                 </ul>
             </div>
         </div>

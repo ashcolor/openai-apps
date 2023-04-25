@@ -51,7 +51,7 @@ const { characters } = storeToRefs(charactersStore);
                         <!-- <td></td> -->
                         <td>
                             <button class="btn btn-square btn-ghost">
-                                <NuxtLink :to="`/characters/edit${character.id}`">
+                                <NuxtLink :to="`/characters/${character.id}`">
                                     <Icon name="bi:pencil-square" width="24" height="24"></Icon>
                                 </NuxtLink>
                             </button>
