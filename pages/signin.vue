@@ -32,7 +32,7 @@ const handleLogin = async () => {
 watch(user, () => {
     if (!user) return;
     navigateTo({
-        path: "/profile",
+        path: "/",
     });
 });
 </script>
