@@ -11,7 +11,10 @@ export default defineEventHandler(async (event) => {
             where: {
                 id: userId,
             },
-            data: body,
+            data: {
+                updated_at: new Date(),
+                ...body,
+            },
         });
         return character;
     } catch (e) {

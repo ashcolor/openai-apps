@@ -1,7 +1,53 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useToast } from "vue-toastification";
+import { useProfileStore } from "~~/stores/useProfileStore";
+
 definePageMeta({
     middleware: ["auth"],
 });
+
+const user = useSupabaseUser();
+const toast = useToast();
+
+const profileStore = useProfileStore();
+const { profile } = storeToRefs(profileStore);
+const { refresh, patchProfile } = profileStore;
+
+const loading = ref(true);
+const openaiApiKey = ref("");
+const username = ref("");
+const website = ref("");
+const avatar_path = ref("");
+
+await refresh();
+if (profile.value) {
+    openaiApiKey.value = profile.value.openai_api_key;
+    username.value = profile.value.username;
+    website.value = profile.value.website;
+    avatar_path.value = profile.value.avatar_url;
+}
+
+loading.value = false;
+
+const updateProfile = async () => {
+    try {
+        loading.value = true;
+        const body = {
+            openai_api_key: openaiApiKey.value,
+            username: username.value,
+            website: website.value,
+            avatar_url: avatar_path.value,
+        };
+        await patchProfile(body);
+        toast.info("保存しました");
+    } catch (error) {
+        console.error(error?.message);
+        toast.error("保存に失敗しました");
+    } finally {
+        loading.value = false;
+    }
+};
 </script>
 
 <template>
@@ -9,6 +55,46 @@ definePageMeta({
         <div>
             <h2 class="text-2xl font-bold border-b-4 border-secondary py-4">プロフィール</h2>
         </div>
-        <ProfileAccount></ProfileAccount>
+        <div>
+            <form class="form-control space-y-6" @submit.prevent="updateProfile">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">ユーザアイコン</span>
+                    </label>
+                    <div class="avatar self-center">
+                        <div class="w-24 rounded-full ring-1 ring-base-300">
+                            <img :src="avatar_path || DEFAULT_USER_AVATAR" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Email</span>
+                    </label>
+                    <input id="email" type="text" :value="user.email" class="input" disabled />
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Username</span>
+                    </label>
+                    <input type="text" class="input input-bordered" v-model="username" />
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Website</span>
+                    </label>
+                    <input type="text" class="input input-bordered" v-model="website" />
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">OpenAI API Key</span>
+                    </label>
+                    <input type="text" class="input input-bordered" v-model="openaiApiKey" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
+                    更新
+                </button>
+            </form>
+        </div>
     </div>
 </template>
