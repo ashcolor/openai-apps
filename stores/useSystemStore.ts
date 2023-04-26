@@ -6,7 +6,6 @@ export const useSystemStore = defineStore("system", () => {
 
     return {
         // @https://pinia.vuejs.org/cookbook/composables.html#ssr
-        openAiApiKey: skipHydrate(openAiApiKey),
         userAvatarSrc: skipHydrate(userAvatarSrc),
     };
 });

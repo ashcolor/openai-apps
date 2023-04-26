@@ -1,10 +1,10 @@
 import { Ref } from "nuxt/dist/app/compat/capi";
 import { storeToRefs } from "pinia";
-import { useSystemStore } from "~~/stores/useSystemStore";
+import { useProfileStore } from "~~/stores/useProfileStore";
 
 export const useChatCompletionsStream = (messages: Ref<any>) => {
-    const systemStore = useSystemStore();
-    const { openAiApiKey } = storeToRefs(systemStore);
+    const profileStore = useProfileStore();
+    const { profile } = storeToRefs(profileStore);
 
     const data = ref<any>([]);
     const isStreaming = ref<boolean>(false);
@@ -16,7 +16,7 @@ export const useChatCompletionsStream = (messages: Ref<any>) => {
             const response = await fetch("https://api.openai.com/v1/chat/completions", {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${openAiApiKey.value}`,
+                    Authorization: `Bearer ${profile.value?.openai_api_key}`,
                 },
                 method: "POST",
                 body: JSON.stringify({

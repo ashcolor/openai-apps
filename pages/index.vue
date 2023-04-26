@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useSystemStore } from "~~/stores/useSystemStore";
 import { useChatStore } from "~~/stores/useChatStore";
 import { useCharacterStore } from "~~/stores/useCharacterStore";
 
 definePageMeta({
     middleware: ["auth"],
 });
-
-const systemStore = useSystemStore();
-const { isCharacterEditing } = storeToRefs(systemStore);
 
 const currentView = ref<"chat" | "character">("chat");
 

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useSystemStore } from "~~/stores/useSystemStore";
+import { useProfileStore } from "~~/stores/useProfileStore";
 
 definePageMeta({
     middleware: ["auth"],
 });
 
-const systemStore = useSystemStore();
-const { userAvatarSrc } = storeToRefs(systemStore);
+const profileStore = useProfileStore();
+const { profile } = storeToRefs(profileStore);
 
 const listClass = (path: string) => {
     const route = useRoute();
@@ -57,7 +57,7 @@ const onClickLogout = async () => {
                 <div class="tooltip tooltip-right" data-tip="プロフィール">
                     <div class="chat-image avatar">
                         <div class="w-6 rounded-full ring-1 ring-base-300">
-                            <img :src="userAvatarSrc || DEFAULT_USER_AVATAR" />
+                            <img :src="profile?.avatar_url || DEFAULT_USER_AVATAR" />
                         </div>
                     </div>
                 </div>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useSystemStore } from "~~/stores/useSystemStore";
+import { useProfileStore } from "~~/stores/useProfileStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
 import { useCharacterStore } from "~~/stores/useCharacterStore";
 
-const systemStore = useSystemStore();
-const { userAvatarSrc } = storeToRefs(systemStore);
+const profileStore = useProfileStore();
+const { profile } = storeToRefs(profileStore);
 
 const messagesStore = useMessagesStore();
 const { messages, streamingMessage, isStreaming } = storeToRefs(messagesStore);
@@ -45,9 +45,9 @@ const chatClass = (role: string) => {
                 <div class="w-12 rounded-full">
                     <img
                         v-if="message.role === 'assistant'"
-                        :src="character?.avatarSrc || DEFAULT_CHARACTER_AVATAR"
+                        :src="character?.avatar_src || DEFAULT_CHARACTER_AVATAR"
                     />
-                    <img v-else :src="userAvatarSrc || DEFAULT_USER_AVATAR" />
+                    <img v-else :src="profile?.avatar_url || DEFAULT_USER_AVATAR" />
                 </div>
             </div>
             <div v-html="nl2br(message.content)" class="chat-bubble"></div>

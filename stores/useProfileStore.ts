@@ -1,7 +1,7 @@
 import { defineStore, skipHydrate, storeToRefs } from "pinia";
 import { profiles } from "@prisma/client";
 
-export const useProfileStore = defineStore("chat", () => {
+export const useProfileStore = defineStore("profile", () => {
     const {
         data: profile,
         execute,
@@ -15,6 +15,7 @@ export const useProfileStore = defineStore("chat", () => {
             method: "PATCH",
             body,
         });
+        await refresh();
     };
 
     return {
