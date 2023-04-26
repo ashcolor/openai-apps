@@ -7,18 +7,6 @@ definePageMeta({
     middleware: ["auth"],
 });
 
-const breadcrumbs = [
-    {
-        name: "キャラクター一覧",
-        path: "/characters",
-        icon: "bi:folder",
-    },
-    {
-        name: "キャラクター編集",
-        icon: "bi:folder",
-    },
-];
-
 const toast = useToast();
 const route = useRoute();
 const id = parseInt(route.params.id ?? "");
@@ -54,9 +42,15 @@ const onClickSave = async () => {
 
 <template>
     <div class="h-full px-8 py-4 flex flex-col gap-4">
-        <div><Breadcrumbs :breadcrumbs="breadcrumbs"></Breadcrumbs></div>
         <div>
-            <h2 class="text-2xl font-bold border-b-4 border-secondary pb-4">キャラクター編集</h2>
+            <div class="border-b-4 border-secondary pb-4 flex flex-row items-center gap-2">
+                <NuxtLink to="/characters" class="flex items-center">
+                    <button class="btn btn-sm btn-ghost px-2">
+                        <Icon name="bi:chevron-left" width="24" height="32"></Icon>
+                    </button>
+                </NuxtLink>
+                <h2 class="inline text-2xl font-bold">キャラクター編集</h2>
+            </div>
         </div>
         <div class="grow flex flex-row gap-8">
             <div class="form-control">
