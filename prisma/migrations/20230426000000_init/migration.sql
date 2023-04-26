@@ -1,6 +1,8 @@
 -- CreateTable
 CREATE TABLE "public"."characters" (
     "id" SERIAL NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "user_id" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "avatar_src" TEXT NOT NULL,
@@ -12,6 +14,8 @@ CREATE TABLE "public"."characters" (
 -- CreateTable
 CREATE TABLE "public"."chats" (
     "id" SERIAL NOT NULL,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "user_id" UUID NOT NULL,
     "character_id" INTEGER,
 
@@ -21,6 +25,8 @@ CREATE TABLE "public"."chats" (
 -- CreateTable
 CREATE TABLE "public"."messages" (
     "id" SERIAL NOT NULL,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "user_id" UUID NOT NULL,
     "chat_id" INTEGER NOT NULL,
     "role" TEXT NOT NULL,
@@ -32,11 +38,13 @@ CREATE TABLE "public"."messages" (
 -- CreateTable
 CREATE TABLE "public"."profiles" (
     "id" UUID NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6),
     "email" TEXT,
     "username" TEXT,
     "avatar_url" TEXT,
     "website" TEXT,
+    "openai_api_key" TEXT,
 
     CONSTRAINT "profiles_pkey" PRIMARY KEY ("id")
 );

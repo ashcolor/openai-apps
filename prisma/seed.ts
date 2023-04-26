@@ -9,8 +9,9 @@ async function main() {
             id: process.env.SEED_USER_ID || "",
             username: "ユーザ",
             avatar_url: "https://placehold.jp/24x24.png",
-            website: "https:example.com",
+            website: "https://example.com",
             email: "user@example.com",
+            openai_api_key: process.env.SEED_OPENAI_API_KEY || "",
         },
     });
     console.log(profile);
