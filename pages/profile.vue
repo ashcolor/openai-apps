@@ -22,10 +22,10 @@ const avatar_path = ref("");
 
 await refresh();
 if (profile.value) {
-    openaiApiKey.value = profile.value.openai_api_key;
-    username.value = profile.value.username;
-    website.value = profile.value.website;
-    avatar_path.value = profile.value.avatar_url;
+    openaiApiKey.value = profile.value?.openai_api_key ?? "";
+    username.value = profile.value?.username ?? "";
+    website.value = profile.value?.website ?? "";
+    avatar_path.value = profile.value?.avatar_url ?? "";
 }
 
 loading.value = false;
