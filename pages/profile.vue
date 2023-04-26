@@ -42,7 +42,7 @@ const updateProfile = async () => {
         await patchProfile(body);
         toast.info("保存しました");
     } catch (error) {
-        console.error(error?.message);
+        console.error(error);
         toast.error("保存に失敗しました");
     } finally {
         loading.value = false;
