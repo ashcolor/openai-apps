@@ -12,8 +12,8 @@ datasource postgres {
 
 model characters {
   id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime @default(now()) @postgres.Timestamptz(6)
+  updated_at DateTime @default(now()) @postgres.Timestamptz(6)
   user_id    String   @postgres.Uuid
   name       String
   avatar_src String
@@ -50,8 +50,8 @@ model messages {
 
 model profiles {
   id             String    @id @postgres.Uuid
-  created_at     DateTime  @default(now())
-  updated_at     DateTime? @postgres.Timestamptz(6)
+  created_at     DateTime  @default(now()) @postgres.Timestamptz(6)
+  updated_at     DateTime? @default(now()) @postgres.Timestamptz(6)
   email          String?
   username       String?   @unique
   avatar_url     String?

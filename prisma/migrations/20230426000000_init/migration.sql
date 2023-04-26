@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE "public"."characters" (
     "id" SERIAL NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "user_id" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "avatar_src" TEXT NOT NULL,
@@ -38,8 +38,8 @@ CREATE TABLE "public"."messages" (
 -- CreateTable
 CREATE TABLE "public"."profiles" (
     "id" UUID NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMPTZ(6),
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
     "email" TEXT,
     "username" TEXT,
     "avatar_url" TEXT,
