@@ -18,7 +18,10 @@ export default defineEventHandler(async (event) => {
             where: {
                 id,
             },
-            data: body,
+            data: {
+                updated_at: new Date(),
+                ...body,
+            },
         });
         return chat;
     } catch (e) {
