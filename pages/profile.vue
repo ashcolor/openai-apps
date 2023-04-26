@@ -61,11 +61,7 @@ const updateProfile = async () => {
                     <label class="label">
                         <span class="label-text">ユーザアイコン</span>
                     </label>
-                    <div class="avatar self-center">
-                        <div class="w-24 rounded-full ring-1 ring-base-300">
-                            <img :src="avatar_path || DEFAULT_USER_AVATAR" />
-                        </div>
-                    </div>
+                    <AvatarImgWithFileUpload v-model:src="avatar_path"></AvatarImgWithFileUpload>
                 </div>
                 <div class="form-control">
                     <label class="label">
