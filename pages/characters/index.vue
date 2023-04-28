@@ -31,7 +31,6 @@ const { characters } = storeToRefs(charactersStore);
                         <th>アバター</th>
                         <th>名前</th>
                         <th>プロンプト</th>
-                        <!-- <th>テンプレート</th> -->
                         <th>編集</th>
                         <th>削除</th>
                     </tr>
@@ -48,13 +47,12 @@ const { characters } = storeToRefs(charactersStore);
                         </td>
                         <td>{{ character.name }}</td>
                         <td>{{ character.prompt }}</td>
-                        <!-- <td></td> -->
                         <td>
-                            <button class="btn btn-square btn-ghost">
-                                <NuxtLink :to="`/characters/${character.id}`">
+                            <NuxtLink :to="`/characters/${character.id}`">
+                                <button class="btn btn-square btn-ghost">
                                     <Icon name="bi:pencil-square" width="24" height="24"></Icon>
-                                </NuxtLink>
-                            </button>
+                                </button>
+                            </NuxtLink>
                         </td>
                         <td>
                             <button
