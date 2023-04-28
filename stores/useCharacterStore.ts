@@ -21,6 +21,7 @@ export const useCharacterStore = defineStore("character", () => {
             method: "PATCH",
             body: character,
         });
+        await refresh();
     };
 
     return {

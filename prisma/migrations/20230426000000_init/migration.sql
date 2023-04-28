@@ -12,6 +12,19 @@ CREATE TABLE "public"."characters" (
 );
 
 -- CreateTable
+CREATE TABLE "public"."templates" (
+    "id" SERIAL NOT NULL,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "user_id" UUID NOT NULL,
+    "character_id" INTEGER,
+    "title" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+
+    CONSTRAINT "templates_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "public"."chats" (
     "id" SERIAL NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -51,6 +64,9 @@ CREATE TABLE "public"."profiles" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "profiles_username_key" ON "public"."profiles"("username");
+
+-- AddForeignKey
+ALTER TABLE "public"."templates" ADD CONSTRAINT "templates_character_id_fkey" FOREIGN KEY ("character_id") REFERENCES "public"."characters"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."chats" ADD CONSTRAINT "chats_character_id_fkey" FOREIGN KEY ("character_id") REFERENCES "public"."characters"("id") ON DELETE SET NULL ON UPDATE CASCADE;

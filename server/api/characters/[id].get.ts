@@ -14,6 +14,18 @@ export default defineEventHandler(async (event) => {
 
     try {
         const character = await prisma.characters.findUnique({
+            select: {
+                id: true,
+                prompt: true,
+                name: true,
+                Templates: {
+                    select: {
+                        id: true,
+                        title: true,
+                        content: true,
+                    },
+                },
+            },
             where: {
                 id,
             },

@@ -3,6 +3,11 @@ import { createClient } from "@supabase/supabase-js";
 export default defineEventHandler(async (event) => {
     const path = event.path;
 
+    // if (process.env.NODE_ENV === "development") {
+    //     event.context.userId = import.meta.env.SEED_USER_ID;
+    //     return;
+    // }
+
     if (path.indexOf("/api") === 0 && path.indexOf("/api/_supabase") !== 0) {
         try {
             const cookies = parseCookies(event);

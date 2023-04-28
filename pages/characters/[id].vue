@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { templates } from ".prisma/client";
 import { storeToRefs } from "pinia";
 import { useToast } from "vue-toastification";
 import { useCharacterStore } from "~~/stores/useCharacterStore";
@@ -25,6 +26,7 @@ if (!character.value) {
 const name = ref<string>(character.value?.name ?? "");
 const avatarSrc = ref<string>(character.value?.avatar_src ?? "");
 const prompt = ref<string>(character.value?.prompt ?? "");
+const templates = ref<Array<Object>>(character.value.Templates);
 
 const onClickSave = async () => {
     try {
@@ -32,11 +34,24 @@ const onClickSave = async () => {
             name: name.value,
             avatar_src: avatarSrc.value,
             prompt: prompt.value,
+            templates: templates.value,
         });
         toast.info("保存しました");
     } catch (e) {
         toast.error("保存に失敗しました");
     }
+};
+
+const onClickAddTemplateButton = () => {
+    templates.value.push({
+        id: null,
+        title: "",
+        content: "",
+    });
+};
+
+const onClickDeleteTemplateButton = (index: number) => {
+    templates.value.splice(index, 1);
 };
 </script>
 
@@ -52,33 +67,73 @@ const onClickSave = async () => {
                 <h2 class="inline text-2xl font-bold">キャラクター編集</h2>
             </div>
         </div>
-        <div class="grow flex flex-row gap-8">
+        <div class="grow min-h-0 flex flex-row gap-8">
             <div class="form-control">
                 <label class="label">
                     <span class="label-text">Profile Picture</span>
                 </label>
                 <AvatarImgWithFileUpload v-model:src="avatarSrc"></AvatarImgWithFileUpload>
             </div>
-            <div class="form-control grow flex flex-col">
-                <label class="label">
-                    <span class="label-text">名前</span>
-                </label>
-                <input
-                    v-model="name"
-                    type="text"
-                    placeholder="Type here"
-                    class="input input-sm input-bordered"
-                />
-                <label class="label">
-                    <span class="label-text">プロンプト</span>
-                </label>
-                <textarea
-                    v-model="prompt"
-                    type="text"
-                    placeholder="Type here"
-                    class="textarea textarea-bordered grow"
-                ></textarea>
-                <div class="mt-4">
+            <div class="grow min-h-0 flex flex-col gap-4">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">名前</span>
+                    </label>
+                    <input
+                        v-model="name"
+                        type="text"
+                        placeholder="Type here"
+                        class="input input-sm input-bordered"
+                    />
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">プロンプト</span>
+                    </label>
+                    <textarea
+                        v-model="prompt"
+                        type="text"
+                        placeholder="Type here"
+                        class="textarea textarea-bordered h-96"
+                    ></textarea>
+                </div>
+                <div class="grow min-h-0 form-control">
+                    <label class="label">
+                        <span class="label-text">定型文</span>
+                    </label>
+                    <div class="space-y-2 overflow-auto">
+                        <div v-for="(template, index) in templates" class="">
+                            <div class="input-group">
+                                <span>タイトル</span>
+                                <input
+                                    v-model="template.title"
+                                    type="text"
+                                    placeholder="タイトル"
+                                    class="grow input input-bordered"
+                                />
+                                <button
+                                    class="btn btn-outline"
+                                    @click="onClickDeleteTemplateButton(index)"
+                                >
+                                    <Icon name="bi:trash"></Icon>
+                                </button>
+                            </div>
+                            <textarea
+                                :value="template.content"
+                                type="text"
+                                placeholder="内容"
+                                class="textarea textarea-bordered w-full h-18"
+                            />
+                        </div>
+                        <div
+                            class="btn btn-block btn-sm btn-outline"
+                            @click="onClickAddTemplateButton"
+                        >
+                            <Icon name="bi:plus-circle"></Icon>
+                        </div>
+                    </div>
+                </div>
+                <div>
                     <button type="button" class="btn w-full" @click="onClickSave(character.id)">
                         保存
                     </button>

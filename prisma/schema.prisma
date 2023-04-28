@@ -1,62 +1,80 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema", "clientExtensions"]
-  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+    provider        = "prisma-client-js"
+    previewFeatures = ["multiSchema", "clientExtensions"]
+    binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
 datasource postgres {
-  provider = "postgres"
-  url      = env("DB_URL")
-  schemas  = ["public"]
+    provider = "postgres"
+    url      = env("DB_URL")
+    schemas  = ["public"]
 }
 
 model characters {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now()) @postgres.Timestamptz(6)
-  updated_at DateTime @default(now()) @postgres.Timestamptz(6)
-  user_id    String   @postgres.Uuid
-  name       String
-  avatar_src String
-  prompt     String
-  Chats      chats[]
+    id         Int      @id @default(autoincrement())
+    created_at DateTime @default(now()) @postgres.Timestamptz(6)
+    updated_at DateTime @default(now()) @postgres.Timestamptz(6)
+    user_id    String   @postgres.Uuid
+    name       String
+    avatar_src String
+    prompt     String
 
-  @@schema("public")
+    Chats     chats[]
+    Templates templates[]
+
+    @@schema("public")
+}
+
+model templates {
+    id           Int      @id @default(autoincrement())
+    created_at   DateTime @default(now()) @postgres.Timestamptz(6)
+    updated_at   DateTime @default(now()) @postgres.Timestamptz(6)
+    user_id      String   @postgres.Uuid
+    character_id Int?
+    title        String
+    content      String
+
+    Character characters? @relation(fields: [character_id], references: [id])
+
+    @@schema("public")
 }
 
 model chats {
-  id           Int         @id @default(autoincrement())
-  created_at   DateTime    @default(now()) @postgres.Timestamptz(6)
-  updated_at   DateTime    @default(now()) @postgres.Timestamptz(6)
-  user_id      String      @postgres.Uuid
-  Character    characters? @relation(fields: [character_id], references: [id])
-  character_id Int?
-  Messages     messages[]
+    id           Int      @id @default(autoincrement())
+    created_at   DateTime @default(now()) @postgres.Timestamptz(6)
+    updated_at   DateTime @default(now()) @postgres.Timestamptz(6)
+    user_id      String   @postgres.Uuid
+    character_id Int?
 
-  @@schema("public")
+    Messages  messages[]
+    Character characters? @relation(fields: [character_id], references: [id])
+
+    @@schema("public")
 }
 
 model messages {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now()) @postgres.Timestamptz(6)
-  updated_at DateTime @default(now()) @postgres.Timestamptz(6)
-  user_id    String   @postgres.Uuid
-  Chat       chats    @relation(fields: [chat_id], references: [id], onDelete: Cascade)
-  chat_id    Int
-  role       String
-  content    String
+    id         Int      @id @default(autoincrement())
+    created_at DateTime @default(now()) @postgres.Timestamptz(6)
+    updated_at DateTime @default(now()) @postgres.Timestamptz(6)
+    user_id    String   @postgres.Uuid
+    chat_id    Int
+    role       String
+    content    String
 
-  @@schema("public")
+    Chat chats @relation(fields: [chat_id], references: [id], onDelete: Cascade)
+
+    @@schema("public")
 }
 
 model profiles {
-  id             String    @id @postgres.Uuid
-  created_at     DateTime  @default(now()) @postgres.Timestamptz(6)
-  updated_at     DateTime? @default(now()) @postgres.Timestamptz(6)
-  email          String?
-  username       String?   @unique
-  avatar_url     String?
-  website        String?
-  openai_api_key String?
+    id             String    @id @postgres.Uuid
+    created_at     DateTime  @default(now()) @postgres.Timestamptz(6)
+    updated_at     DateTime? @default(now()) @postgres.Timestamptz(6)
+    email          String?
+    username       String?   @unique
+    avatar_url     String?
+    website        String?
+    openai_api_key String?
 
-  @@schema("public")
+    @@schema("public")
 }
