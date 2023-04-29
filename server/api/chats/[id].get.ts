@@ -20,6 +20,12 @@ export default defineEventHandler(async (event) => {
                     select: {
                         name: true,
                         avatar_src: true,
+                        Templates: {
+                            select: {
+                                title: true,
+                                content: true,
+                            },
+                        },
                     },
                 },
                 Messages: true,

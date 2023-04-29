@@ -119,7 +119,7 @@ const onClickDeleteTemplateButton = (index: number) => {
                                 </button>
                             </div>
                             <textarea
-                                :value="template.content"
+                                v-model="template.content"
                                 type="text"
                                 placeholder="内容"
                                 class="textarea textarea-bordered w-full h-18"
