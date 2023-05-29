@@ -53,7 +53,7 @@ db:
 
 ##### Prisma #####
 migrate:
-	prisma migrate dev
 	prisma generate
+	prisma migrate dev
 seed:
 	prisma db seed
