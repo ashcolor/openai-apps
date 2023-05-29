@@ -1,12 +1,12 @@
 <script setup lang="ts">
+// @ts-ignore
 import { useToast } from "vue-toastification/dist/index.mjs";
 
 definePageMeta({
     layout: "auth",
+    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: "/" },
 });
 
-const user = useSupabaseUser();
-const supabase = useSupabaseClient();
 const toast = useToast();
 
 const loading = ref(false);
@@ -18,11 +18,19 @@ const isSend = ref(false);
 const handleLogin = async () => {
     try {
         loading.value = true;
-        const { error } = await supabase.auth.signUp({
-            email: email.value,
-            password: password.value,
+
+        const response = await $fetch("/api/auth/register", {
+            method: "POST",
+            body: {
+                email: email.value,
+                password: password.value,
+            },
         });
-        if (error) throw error;
+
+        if (!response) {
+            throw Error();
+        }
+
         isSend.value = true;
     } catch (error) {
         console.error(error?.error_description || error?.message);

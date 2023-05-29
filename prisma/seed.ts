@@ -1,7 +1,22 @@
 import { PrismaClient } from "@prisma/client";
+import { randomUUID } from "crypto";
 
 const prisma = new PrismaClient();
 async function main() {
+    const user = await prisma.users.upsert({
+        where: { id: process.env.SEED_USER_ID || "" },
+        update: {},
+        create: {
+            id: randomUUID(),
+            username: "ユーザ",
+            email: "user@example.com",
+            email_verified_at: null,
+            password: null,
+            remember_token: null,
+        },
+    });
+    console.log(user);
+
     const profile = await prisma.profiles.upsert({
         where: { id: process.env.SEED_USER_ID || "" },
         update: {},
