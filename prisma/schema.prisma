@@ -7,6 +7,9 @@ generator client {
 
 datasource postgres {
     provider = "postgres"
+    // TODO 以下の形式で保存したいが2023/05/31時点では不可（see @https://github.com/prisma/prisma/issues/2559）
+    // url      = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`
+    // ローカルでは.env内で文字列を結合できるが、Vervelでは環境変数内で他の環境変数を使用できない
     url      = env("DB_URL")
     schemas  = ["public", "auth"]
 }
