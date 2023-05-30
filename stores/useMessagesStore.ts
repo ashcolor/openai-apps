@@ -68,7 +68,7 @@ export const useMessagesStore = defineStore("messages", () => {
     };
 
     const deleteAllMessages = async () => {
-        const message = await $fetch(`/api/chats/messages/${chatStore.selectedChatId}`, {
+        const message = await $fetch(`/api/chats/${chatStore.selectedChatId}/messages`, {
             method: "DELETE",
         });
         await chatsStore.refresh();

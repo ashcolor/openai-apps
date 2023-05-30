@@ -11,7 +11,8 @@ OpenAI API を使用したアプリケーション
 -   [icones](https://icones.js.org/)
 -   [Vue Toastification](https://vue-toastification.maronato.dev/)
 -   [Prisma](https://www.prisma.io/docs)
--   [Supabase](https://app.supabase.com/project/xicccftxvthjqjbxhqnf)
+
+    [Nuxt Auth](https://sidebase.io/nuxt-auth/getting-started)
 
 ## 手順
 

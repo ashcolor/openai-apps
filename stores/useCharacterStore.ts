@@ -2,7 +2,7 @@ import { defineStore, storeToRefs } from "pinia";
 import { useChatsStore } from "~~/stores/useChatsStore";
 import { useChatStore } from "~~/stores/useChatStore";
 import { useCharactersStore } from "~~/stores/useCharactersStore";
-import { Character } from "@prisma/client";
+import { characters } from "@prisma/client";
 
 export const useCharacterStore = defineStore("character", () => {
     const chatsStore = useChatsStore();
@@ -14,18 +14,14 @@ export const useCharacterStore = defineStore("character", () => {
         data: character,
         pending,
         refresh,
-    } = useFetch<Character>(computed(() => `/api/characters/${selectedCharacterId.value}`));
+    } = useFetch<characters>(computed(() => `/api/characters/${selectedCharacterId.value}`));
 
-    const patchCharacter = async (character: Character) => {
+    const patchCharacter = async (character: Object) => {
         const savedCharacter = await $fetch(`/api/characters/${selectedCharacterId.value}`, {
             method: "PATCH",
             body: character,
         });
-
-        // @https://pinia.vuejs.org/cookbook/composing-stores.html
-        await chatsStore.refresh();
-        await chatStore.refresh();
-        await charactersStore.refresh();
+        await refresh();
     };
 
     return {

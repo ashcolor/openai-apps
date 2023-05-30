@@ -11,7 +11,7 @@ export const useCharactersStore = defineStore("characters", () => {
             method: "POST",
             body: {
                 name: DEFAULT_CHARACTER_NAME,
-                avatarSrc: DEFAULT_CHARACTER_AVATAR,
+                avatar_src: DEFAULT_CHARACTER_AVATAR,
                 prompt: "",
             },
         });

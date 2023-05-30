@@ -1,8 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
-    const prisma = new PrismaClient();
-    const id = event.context.params?.id;
+    const id = parseInt(event.context.params?.id ?? "");
     const body = await readBody(event);
 
     if (!id) {
@@ -12,15 +11,21 @@ export default defineEventHandler(async (event) => {
         });
     }
 
+    const prisma = new PrismaClient();
+
     try {
-        const chat = await prisma.chat.update({
+        const chat = await prisma.chats.update({
             where: {
-                id: parseInt(id),
+                id,
             },
-            data: body,
+            data: {
+                updated_at: new Date(),
+                ...body,
+            },
         });
         return chat;
     } catch (e) {
+        console.error(e);
         throw createError({
             statusCode: 400,
             statusMessage: "保存に失敗しました",

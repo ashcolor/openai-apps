@@ -1,24 +1,38 @@
 import { PrismaClient } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
-    const prisma = new PrismaClient();
-    const id = event.context.params?.id;
+    const id = parseInt(event.context.params?.id ?? "");
 
     if (!id) {
         throw createError({
             statusCode: 400,
-            statusMessage: "IDは必須です",
+            statusMessage: "",
         });
     }
 
+    const prisma = new PrismaClient();
+
     try {
-        const character = await prisma.character.findUnique({
+        const character = await prisma.characters.findUnique({
+            select: {
+                id: true,
+                prompt: true,
+                name: true,
+                Templates: {
+                    select: {
+                        id: true,
+                        title: true,
+                        content: true,
+                    },
+                },
+            },
             where: {
-                id: parseInt(id),
+                id,
             },
         });
         return character;
     } catch (e) {
+        console.error(e);
         throw createError({
             statusCode: 400,
             statusMessage: "取得に失敗しました",
