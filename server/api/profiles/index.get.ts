@@ -22,7 +22,5 @@ export default defineEventHandler(async (event) => {
         },
     });
 
-    console.log(profile);
-
     return profile;
 });
