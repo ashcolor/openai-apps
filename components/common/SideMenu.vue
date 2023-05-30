@@ -15,7 +15,9 @@ const listClass = (path: string) => {
 
 const onClickLogout = async () => {
     const { signOut } = await useAuth();
-    await signOut();
+    await signOut({
+        callbackUrl: "/auth/login",
+    });
 };
 </script>
 
