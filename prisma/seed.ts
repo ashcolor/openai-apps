@@ -2,13 +2,14 @@ import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
 
 const prisma = new PrismaClient();
+
 async function main() {
+    const userId = randomUUID();
     const user = await prisma.users.upsert({
-        where: { id: process.env.SEED_USER_ID || "" },
+        where: { id: userId },
         update: {},
         create: {
             id: randomUUID(),
-            username: "ユーザ",
             email: "user@example.com",
             email_verified_at: null,
             password: null,
@@ -18,10 +19,10 @@ async function main() {
     console.log(user);
 
     const profile = await prisma.profiles.upsert({
-        where: { id: process.env.SEED_USER_ID || "" },
+        where: { id: userId },
         update: {},
         create: {
-            id: process.env.SEED_USER_ID || "",
+            id: userId,
             username: "ユーザ",
             avatar_url: "https://placehold.jp/24x24.png",
             website: "https://example.com",
@@ -36,7 +37,7 @@ async function main() {
         update: {},
         create: {
             id: 1,
-            user_id: process.env.SEED_USER_ID || "",
+            user_id: userId,
             name: "テストキャラクター",
             prompt: "あなたはシステム開発のスペシャリストです。",
             avatar_src: "",
@@ -49,7 +50,7 @@ async function main() {
         update: {},
         create: {
             id: 1,
-            user_id: process.env.SEED_USER_ID || "",
+            user_id: userId,
             character_id: 1,
             title: "テスト",
             content: "以下のコードのテストコードを作成してください。\n言語は{言語}です・",
@@ -62,7 +63,7 @@ async function main() {
         update: {},
         create: {
             id: 1,
-            user_id: process.env.SEED_USER_ID || "",
+            user_id: userId,
             character_id: 1,
         },
     });
@@ -73,7 +74,7 @@ async function main() {
         update: {},
         create: {
             id: 1,
-            user_id: process.env.SEED_USER_ID || "",
+            user_id: userId,
             chat_id: 1,
             role: "assistant",
             content: "何でも質問してください。",
