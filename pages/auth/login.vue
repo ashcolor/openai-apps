@@ -1,12 +1,13 @@
 <script setup lang="ts">
+// @ts-ignore
 import { useToast } from "vue-toastification/dist/index.mjs";
 
 definePageMeta({
     layout: "auth",
+    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: "/" },
 });
 
-const user = useSupabaseUser();
-const supabase = useSupabaseClient();
+const { signIn } = useAuth();
 const toast = useToast();
 
 const loading = ref(false);
@@ -16,25 +17,27 @@ const password = ref("");
 const handleLogin = async () => {
     try {
         loading.value = true;
-        const { error } = await supabase.auth.signInWithPassword({
-            email: email.value,
+
+        const result = await signIn("credentials", {
+            username: email.value,
             password: password.value,
+            redirect: false,
         });
-        if (error) throw error;
+
+        if (result?.error) {
+            throw Error(result.error);
+        }
+
+        return navigateTo({
+            path: "/",
+        });
     } catch (error) {
-        console.error(error?.error_description || error?.message);
+        console.error(error);
         toast.error("ログインに失敗しました");
     } finally {
         loading.value = false;
     }
 };
-
-watch(user, () => {
-    if (!user) return;
-    navigateTo({
-        path: "/",
-    });
-});
 </script>
 
 <template>

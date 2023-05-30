@@ -1,26 +1,23 @@
-import { createClient } from "@supabase/supabase-js";
+import { getServerSession } from "#auth";
+import { getToken } from "next-auth/jwt";
 
 export default defineEventHandler(async (event) => {
     const path = event.path;
 
-    // if (process.env.NODE_ENV === "development") {
-    //     event.context.userId = import.meta.env.SEED_USER_ID;
-    //     return;
-    // }
-
-    if (path.indexOf("/api") === 0 && path.indexOf("/api/_supabase") !== 0) {
+    if (path.indexOf("/api") === 0 && path.indexOf("/api/auth") === -1) {
         try {
-            const cookies = parseCookies(event);
-            const accessToken = cookies["sb-access-token"];
+            // TODO JWTからuserIdを取得したい
+            // nuxt-authのgetTokenではエラー、next-authの場合はデータが空になっている
+            // const req = event.node.req;
+            // const token = await getToken({ req });
+            // console.log("token", token);
 
-            const supabaseURL = import.meta.env.SUPABASE_URL;
-            const supabaseKey = import.meta.env.SUPABASE_KEY;
-            const supabase = createClient(supabaseURL, supabaseKey);
-            const { data: user } = await supabase.auth.getUser(accessToken);
+            const session = await getServerSession(event);
+            const userId = session?.user.id;
+            if (!userId) {
+                return { status: "unauthenticated!" };
+            }
 
-            if (!user.user) throw Error;
-
-            const userId = user.user?.id;
             event.context.userId = userId;
         } catch (e) {
             console.error(e);

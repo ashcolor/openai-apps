@@ -13,7 +13,7 @@ const { profile } = storeToRefs(profileStore);
     >
         <span> Open AI APIキーが登録されていません。 </span>
         <span
-            ><NuxtLink to="/profiles" class="link">プロフィール画面</NuxtLink
+            ><NuxtLink to="/profile" class="link">プロフィール画面</NuxtLink
             >から登録してください</span
         >
     </div>

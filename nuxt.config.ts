@@ -5,7 +5,7 @@ export default defineNuxtConfig({
         "@vueuse/nuxt",
         "@pinia/nuxt",
         "@nuxtjs/tailwindcss",
-        "@nuxtjs/supabase",
+        "@sidebase/nuxt-auth",
         "nuxt-icon",
     ],
     components: {
@@ -14,4 +14,6 @@ export default defineNuxtConfig({
     build: {
         transpile: ["vue-toastification"],
     },
+    // see @https://sidebase.io/nuxt-auth/configuration/nuxt-config
+    auth: {},
 });

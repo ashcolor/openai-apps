@@ -2,10 +2,6 @@
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "~~/stores/useProfileStore";
 
-definePageMeta({
-    middleware: ["auth"],
-});
-
 const profileStore = useProfileStore();
 const { profile } = storeToRefs(profileStore);
 
@@ -18,10 +14,9 @@ const listClass = (path: string) => {
 };
 
 const onClickLogout = async () => {
-    const supabase = useSupabaseClient();
-    await supabase.auth.signOut();
-    return navigateTo({
-        path: "/auth/login",
+    const { signOut } = await useAuth();
+    await signOut({
+        callbackUrl: "/auth/login",
     });
 };
 </script>
