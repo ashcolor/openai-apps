@@ -7,7 +7,6 @@ definePageMeta({
     middleware: ["auth"],
 });
 
-const user = useSupabaseUser();
 const toast = useToast();
 
 const profileStore = useProfileStore();
@@ -17,14 +16,13 @@ const { refresh, patchProfile } = profileStore;
 const loading = ref(true);
 const openaiApiKey = ref("");
 const username = ref("");
-const website = ref("");
 const avatar_path = ref("");
 
 await refresh();
+
 if (profile.value) {
     openaiApiKey.value = profile.value?.openai_api_key ?? "";
     username.value = profile.value?.username ?? "";
-    website.value = profile.value?.website ?? "";
     avatar_path.value = profile.value?.avatar_url ?? "";
 }
 
@@ -36,7 +34,6 @@ const updateProfile = async () => {
         const body = {
             openai_api_key: openaiApiKey.value,
             username: username.value,
-            website: website.value,
             avatar_url: avatar_path.value,
         };
         await patchProfile(body);
@@ -67,19 +64,19 @@ const updateProfile = async () => {
                     <label class="label">
                         <span class="label-text">Email</span>
                     </label>
-                    <input id="email" type="text" :value="user.email" class="input" disabled />
+                    <input
+                        id="email"
+                        type="text"
+                        :value="profile?.User?.email"
+                        class="input"
+                        disabled
+                    />
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Username</span>
                     </label>
                     <input type="text" class="input input-bordered" v-model="username" />
-                </div>
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Website</span>
-                    </label>
-                    <input type="text" class="input input-bordered" v-model="website" />
                 </div>
                 <div class="form-control">
                     <label class="label">

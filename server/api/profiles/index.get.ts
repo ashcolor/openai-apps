@@ -11,12 +11,18 @@ export default defineEventHandler(async (event) => {
             openai_api_key: true,
             avatar_url: true,
             username: true,
-            website: true,
+            User: {
+                select: {
+                    email: true,
+                },
+            },
         },
         where: {
             id: userId,
         },
     });
+
+    console.log(profile);
 
     return profile;
 });

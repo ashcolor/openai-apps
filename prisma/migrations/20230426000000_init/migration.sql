@@ -53,10 +53,8 @@ CREATE TABLE "public"."profiles" (
     "id" UUID NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
-    "email" TEXT,
     "username" TEXT,
     "avatar_url" TEXT,
-    "website" TEXT,
     "openai_api_key" TEXT,
 
     CONSTRAINT "profiles_pkey" PRIMARY KEY ("id")

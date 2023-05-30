@@ -14,6 +14,9 @@ export default defineEventHandler(async (event) => {
 
             const session = await getServerSession(event);
             const userId = session?.user.id;
+
+            console.log(userId);
+
             if (!userId) {
                 return { status: "unauthenticated!" };
             }

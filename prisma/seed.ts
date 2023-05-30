@@ -9,7 +9,7 @@ async function main() {
         where: { id: userId },
         update: {},
         create: {
-            id: randomUUID(),
+            id: userId,
             email: "user@example.com",
             email_verified_at: null,
             password: null,
@@ -25,8 +25,6 @@ async function main() {
             id: userId,
             username: "ユーザ",
             avatar_url: "https://placehold.jp/24x24.png",
-            website: "https://example.com",
-            email: "user@example.com",
             openai_api_key: process.env.SEED_OPENAI_API_KEY || "",
         },
     });
