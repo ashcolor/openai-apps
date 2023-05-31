@@ -38,6 +38,12 @@ const handleLogin = async () => {
         loading.value = false;
     }
 };
+
+const handleGoogleLogin = async () => {
+    await signIn("google", {
+        callbackUrl: "/",
+    });
+};
 </script>
 
 <template>
@@ -95,6 +101,11 @@ const handleLogin = async () => {
                         </div>
                     </div>
                 </form>
+                <div class="divider">または</div>
+
+                <div>
+                    <button class="btn" @click="handleGoogleLogin()">Googleでログイン</button>
+                </div>
                 <div>
                     <span class="text-gray-500">アカウントを持っていない場合は&nbsp;</span>
                     <NuxtLink to="/auth/signup" class="link link-hover link-primary"
