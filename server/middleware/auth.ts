@@ -1,19 +1,14 @@
 import { getServerSession } from "#auth";
-import { getToken } from "next-auth/jwt";
+import { getToken } from "#auth";
 
 export default defineEventHandler(async (event) => {
     const path = event.path;
 
     if (path.indexOf("/api") === 0 && path.indexOf("/api/auth") === -1) {
         try {
-            // TODO JWTからuserIdを取得したい
-            // nuxt-authのgetTokenではエラー、next-authの場合はデータが空になっている
-            // const req = event.node.req;
-            // const token = await getToken({ req });
-            // console.log("token", token);
+            const token = await getToken({ event });
 
-            const session = await getServerSession(event);
-            const userId = session?.user.id;
+            const userId = token?.userId;
 
             if (!userId) {
                 return { status: "unauthenticated!" };

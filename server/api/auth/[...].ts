@@ -1,9 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
-// import CredentialsProvider from "next-auth/providers/credentials";
-// import GithubProvider from "next-auth/providers/github";
-
 import { NuxtAuthHandler } from "#auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -13,9 +10,9 @@ export default NuxtAuthHandler({
     secret: process.env.AUTH_SECRET,
     pages: {
         signIn: "/auth/login",
-    },
-    session: {
-        strategy: "jwt", // jwtにする
+        // signOut: "/auth/logout",
+        // verifyRequest: "/auth/verify-request",
+        newUser: "/auth/register",
     },
     providers: [
         // GoogleProvider.default({
@@ -28,10 +25,6 @@ export default NuxtAuthHandler({
         // }),
         CredentialsProvider.default({
             name: "Credentials",
-            credentials: {
-                username: { label: "Username", type: "text", placeholder: "tarou" },
-                password: { label: "Password", type: "password" },
-            },
             async authorize(
                 credentials: Record<"username" | "password", string> | undefined,
                 req: any
@@ -87,11 +80,11 @@ export default NuxtAuthHandler({
     callbacks: {
         async session({ session, token }) {
             (session as any).user.id = token.id;
-            return Promise.resolve(session);
+            return session;
         },
         async jwt({ token, account }) {
             if (account) {
-                token.id = account.providerAccountId;
+                token.userId = account.providerAccountId;
             }
             return token;
         },
