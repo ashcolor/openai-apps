@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 import { useProfileStore } from "~~/stores/useProfileStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
 import { useCharacterStore } from "~~/stores/useCharacterStore";
+import { nl2br } from "~/utils/utils";
 
 const profileStore = useProfileStore();
 const { profile } = storeToRefs(profileStore);
