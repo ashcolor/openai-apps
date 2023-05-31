@@ -10,9 +10,9 @@ export default NuxtAuthHandler({
     secret: process.env.AUTH_SECRET,
     pages: {
         signIn: "/auth/login",
+        newUser: "/auth/signup",
         // signOut: "/auth/logout",
         // verifyRequest: "/auth/verify-request",
-        newUser: "/auth/register",
     },
     providers: [
         // GoogleProvider.default({
@@ -67,11 +67,11 @@ export default NuxtAuthHandler({
                         },
                     });
                     return loginUser;
-                } catch (e) {
-                    console.error(e);
+                } catch (error: any) {
+                    console.error(error);
                     throw createError({
                         statusCode: 400,
-                        statusMessage: "登録に失敗しました",
+                        statusMessage: error?.message,
                     });
                 }
             },

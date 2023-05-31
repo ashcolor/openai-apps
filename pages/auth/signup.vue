@@ -15,11 +15,11 @@ const password = ref("");
 
 const isSend = ref(false);
 
-const handleLogin = async () => {
+const handleSignup = async () => {
     try {
         loading.value = true;
 
-        const response = await $fetch("/api/auth/register", {
+        const { data, error } = await useFetch("/api/auth/register", {
             method: "POST",
             body: {
                 email: email.value,
@@ -27,14 +27,14 @@ const handleLogin = async () => {
             },
         });
 
-        if (!response) {
-            throw Error();
+        if (error.value) {
+            throw new Error(error.value?.data.statusMessage);
         }
 
         isSend.value = true;
-    } catch (error) {
-        console.error(error?.error_description || error?.message);
-        toast.error("登録に失敗しました");
+    } catch (error: any) {
+        const message = error?.message || "エラーが発生しました";
+        toast.error(message);
     } finally {
         loading.value = false;
     }
@@ -48,7 +48,7 @@ const handleLogin = async () => {
         <div class="card self-center flex md:max-w-xl">
             <div v-if="!isSend" class="card-body bg-base-100 p-16 space-y-3">
                 <h2 class="card-title text-2xl">アカウント作成</h2>
-                <form @submit.prevent="handleLogin">
+                <form @submit.prevent="handleSignup">
                     <div class="space-y-4">
                         <div class="form-control w-full max-w-xs">
                             <label class="label">
