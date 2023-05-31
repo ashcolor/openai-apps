@@ -103,8 +103,12 @@ const handleGoogleLogin = async () => {
                 </form>
                 <div class="divider">または</div>
 
-                <div>
-                    <button class="btn" @click="handleGoogleLogin()">Googleでログイン</button>
+                <div class="flex flex-col place-content-center">
+                    <div class="mx-auto">
+                        <button @click="handleGoogleLogin()">
+                            <img src="/img/btn_google_signin_light_normal.png" />
+                        </button>
+                    </div>
                 </div>
                 <div>
                     <span class="text-gray-500">アカウントを持っていない場合は&nbsp;</span>
