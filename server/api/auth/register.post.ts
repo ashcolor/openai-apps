@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
 import bcrypt from "bcrypt";
-import { debug } from "console";
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);

@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { log } from "console";
 
 export default defineEventHandler(async (event) => {
     const userId = event.context.userId;
