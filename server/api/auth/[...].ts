@@ -140,10 +140,6 @@ export default NuxtAuthHandler({
         async jwt({ token, account, user }) {
             console.log("---jwt---");
 
-            // ユーザが存在する場合
-            //Googleログインの場合
-            // Emailでのログインの場合
-
             if (user) {
                 token.userId = user.id;
             }
