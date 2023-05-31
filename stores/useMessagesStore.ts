@@ -6,7 +6,7 @@ import { useCharacterStore } from "./useCharacterStore";
 export const useMessagesStore = defineStore("messages", () => {
     const chatsStore = useChatsStore();
     const chatStore = useChatStore();
-    const characterStore = useCharacterStore();
+    const { chat } = storeToRefs(chatStore);
 
     const {
         data: messages,
@@ -30,10 +30,10 @@ export const useMessagesStore = defineStore("messages", () => {
     } = useChatCompletionsStream(
         computed(() => {
             const requestMessages = [];
-            if (characterStore?.character?.prompt) {
+            if (chat.value?.Character?.prompt) {
                 requestMessages.push({
                     role: "system",
-                    content: characterStore?.character?.prompt,
+                    content: chat.value?.Character?.prompt,
                 });
             }
             if (messages.value?.length !== 0) {
