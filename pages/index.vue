@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useChatStore } from "~~/stores/useChatStore";
-import { useCharacterStore } from "~~/stores/useCharacterStore";
 
 definePageMeta({
     middleware: ["auth"],
@@ -11,9 +10,6 @@ const currentView = ref<"chat" | "character">("chat");
 
 const chatStore = useChatStore();
 const { chat, selectedChatId } = storeToRefs(chatStore);
-
-const characterStore = useCharacterStore();
-const { character } = storeToRefs(characterStore);
 </script>
 
 <template>
@@ -75,7 +71,7 @@ const { character } = storeToRefs(characterStore);
                     <div class="h-full flex flex-col">
                         <div class="grow flex flex-row gap-8">
                             <ChatCharacterDisplay
-                                v-show="character"
+                                v-show="chat.Character"
                                 class="grow"
                             ></ChatCharacterDisplay>
                         </div>

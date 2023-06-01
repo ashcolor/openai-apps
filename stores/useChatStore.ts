@@ -1,12 +1,9 @@
 import { defineStore, skipHydrate, storeToRefs } from "pinia";
 import { useChatsStore } from "~~/stores/useChatsStore";
-import { useCharacterStore } from "./useCharacterStore";
 import { chats } from "@prisma/client";
 
 export const useChatStore = defineStore("chat", () => {
     const chatsStore = useChatsStore();
-    const characterStore = useCharacterStore();
-    const { selectedCharacterId } = storeToRefs(characterStore);
 
     const pending = ref<boolean>(false);
 
@@ -21,10 +18,6 @@ export const useChatStore = defineStore("chat", () => {
             immediate: false,
         }
     );
-
-    watch(chat, () => {
-        selectedCharacterId.value = chat.value?.characterId || null;
-    });
 
     if (selectedChatId.value) {
         execute();
