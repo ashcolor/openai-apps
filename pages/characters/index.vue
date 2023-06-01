@@ -37,7 +37,7 @@ const { characters } = storeToRefs(charactersStore);
                 </thead>
                 <tbody>
                     <tr v-for="character in characters">
-                        <th>{{ character.id }}</th>
+                        <td>{{ character.id }}</td>
                         <td>
                             <div class="avatar">
                                 <div class="w-12 rounded-full">
@@ -46,7 +46,7 @@ const { characters } = storeToRefs(charactersStore);
                             </div>
                         </td>
                         <td>{{ character.name }}</td>
-                        <td>{{ character.prompt }}</td>
+                        <td class="truncate">{{ character.prompt }}</td>
                         <td>
                             <NuxtLink :to="`/characters/${character.id}`">
                                 <button class="btn btn-square btn-ghost">
@@ -68,3 +68,14 @@ const { characters } = storeToRefs(charactersStore);
         </div>
     </div>
 </template>
+
+<style scoped>
+/* プロンプトが長い場合にテーブルがdivをはみ出すのを防ぐ */
+td {
+    width: 1px;
+}
+td.truncate {
+    width: initial;
+    max-width: 0;
+}
+</style>
