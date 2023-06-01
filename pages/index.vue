@@ -69,12 +69,7 @@ const { chat, selectedChatId } = storeToRefs(chatStore);
                 </div>
                 <div v-show="currentView === 'character'" class="grow min-h-0 p-4">
                     <div class="h-full flex flex-col">
-                        <div class="grow flex flex-row gap-8">
-                            <ChatCharacterDisplay
-                                v-show="chat.Character"
-                                class="grow"
-                            ></ChatCharacterDisplay>
-                        </div>
+                        <ChatCharacterDisplay v-show="chat.Character"></ChatCharacterDisplay>
                     </div>
                 </div>
             </template>
