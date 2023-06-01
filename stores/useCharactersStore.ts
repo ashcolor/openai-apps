@@ -4,6 +4,7 @@ import { useCharacterStore } from "~~/stores/useCharacterStore";
 export const useCharactersStore = defineStore("characters", () => {
     const characterStore = useCharacterStore();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data: characters, pending, error, refresh } = useFetch("/api/characters");
 
     const addCharacter = async () => {
@@ -21,7 +22,7 @@ export const useCharactersStore = defineStore("characters", () => {
     };
 
     const deleteCharacter = async (characterId: number) => {
-        const character = await $fetch(`/api/characters/${characterId}`, {
+        await $fetch(`/api/characters/${characterId}`, {
             method: "DELETE",
         });
         characterStore.selectedCharacterId = null;

@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
         });
         return character;
     } catch (e) {
-        console.error(e);
+        // console.error(e);
         throw createError({
             statusCode: 400,
             statusMessage: "登録に失敗しました",

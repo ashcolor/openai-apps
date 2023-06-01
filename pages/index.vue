@@ -25,11 +25,8 @@ const { chat, selectedChatId } = storeToRefs(chatStore);
             <ChatNewButton></ChatNewButton>
         </div>
 
-        <div v-else="currentView === 'character'" class="grow bg-base-200 flex flex-col">
-            <div
-                v-if="!chat?.character_id"
-                class="grow bg-base-200 flex flex-col place-content-center place-items-center gap-8"
-            >
+        <div v-else class="grow bg-base-200 flex flex-col">
+            <div v-if="!chat?.character_id" class="grow bg-base-200 grid place-">
                 <ChatCharacterSelectCardGroup></ChatCharacterSelectCardGroup>
             </div>
             <template v-else>

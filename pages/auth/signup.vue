@@ -19,7 +19,7 @@ const handleSignup = async () => {
     try {
         loading.value = true;
 
-        const { data, error } = await useFetch("/api/auth/register", {
+        const { error } = await useFetch("/api/auth/register", {
             method: "POST",
             body: {
                 email: email.value,

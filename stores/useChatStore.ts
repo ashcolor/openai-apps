@@ -1,6 +1,6 @@
-import { defineStore, skipHydrate, storeToRefs } from "pinia";
-import { useChatsStore } from "~~/stores/useChatsStore";
+import { defineStore, skipHydrate } from "pinia";
 import { chats } from "@prisma/client";
+import { useChatsStore } from "~~/stores/useChatsStore";
 
 export const useChatStore = defineStore("chat", () => {
     const chatsStore = useChatsStore();
@@ -24,7 +24,7 @@ export const useChatStore = defineStore("chat", () => {
     }
 
     const setCharacter = async (characterId: number) => {
-        const character = await $fetch(`/api/chats/${selectedChatId.value}`, {
+        await $fetch(`/api/chats/${selectedChatId.value}`, {
             method: "PATCH",
             body: {
                 character_id: characterId,

@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
                         prompt: true,
                         Templates: {
                             select: {
+                                id: true,
                                 title: true,
                                 content: true,
                             },
@@ -37,7 +38,7 @@ export default defineEventHandler(async (event) => {
         });
         return chat;
     } catch (e) {
-        console.error(e);
+        // console.error(e);
         throw createError({
             statusCode: 400,
             statusMessage: "取得に失敗しました",

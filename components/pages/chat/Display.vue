@@ -41,7 +41,12 @@ const chatClass = (role: string) => {
 
 <template>
     <div v-show="!isEmpty" ref="chatElement" class="w-full h-full overflow-y-auto">
-        <div v-for="message in messages" class="chat" :class="chatClass(message.role)">
+        <div
+            v-for="message in messages"
+            :key="message.id"
+            class="chat"
+            :class="chatClass(message.role)"
+        >
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
                     <img
@@ -51,7 +56,7 @@ const chatClass = (role: string) => {
                     <img v-else :src="profile?.avatar_url || DEFAULT_USER_AVATAR" />
                 </div>
             </div>
-            <div v-html="nl2br(message.content)" class="chat-bubble"></div>
+            <div class="chat-bubble" v-html="nl2br(message.content)"></div>
         </div>
         <div v-if="isStreaming || streamingMessage" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
@@ -59,7 +64,7 @@ const chatClass = (role: string) => {
                     <img :src="character?.avatar_src || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
-            <div v-if="streamingMessage" v-html="nl2br(streamingMessage)" class="chat-bubble"></div>
+            <div v-if="streamingMessage" class="chat-bubble" v-html="nl2br(streamingMessage)"></div>
             <div v-else class="chat-bubble">
                 <TreeDotsAnimationImg></TreeDotsAnimationImg>
             </div>

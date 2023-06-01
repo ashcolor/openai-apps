@@ -12,7 +12,7 @@ const { selectedChatId } = storeToRefs(chatStore);
 
 <template>
     <ul class="menu bg-base-100 h-full overflow-y-auto flex flex-col flex-nowrap">
-        <li v-for="chat in chats" @click="selectedChatId = chat.id">
+        <li v-for="chat in chats" :key="chat.id" @click="selectedChatId = chat.id">
             <div
                 class="w-full flex flex-row flex-nowrap"
                 :class="{ 'bg-base-300': selectedChatId === chat.id }"

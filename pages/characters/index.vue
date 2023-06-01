@@ -36,7 +36,7 @@ const { characters } = storeToRefs(charactersStore);
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="character in characters">
+                    <tr v-for="character in characters" :key="character.id">
                         <td>{{ character.id }}</td>
                         <td>
                             <div class="avatar">

@@ -7,7 +7,7 @@ export const useChatsStore = defineStore("chats", () => {
     const { data: chats, refresh } = useFetch("/api/chats");
 
     const addChat = async (characterId: number | null = null) => {
-        const chat = await $fetch(`/api/chats`, {
+        const chat = await $fetch("/api/chats", {
             method: "POST",
             body: {
                 characterId,
@@ -19,7 +19,7 @@ export const useChatsStore = defineStore("chats", () => {
     };
 
     const deleteChat = async (chatId: number) => {
-        const chat = await $fetch(`/api/chats/${chatId}`, {
+        await $fetch(`/api/chats/${chatId}`, {
             method: "DELETE",
         });
         await refresh();

@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
         return message;
     } catch (e) {
-        console.error(e);
+        // console.error(e);
         throw createError({
             statusCode: 400,
             statusMessage: "削除に失敗しました",

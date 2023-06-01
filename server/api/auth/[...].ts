@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
-import bcrypt from "bcrypt";
+import { PrismaClient } from "@prisma/client";
+import * as bcrypt from "bcrypt";
 
-import { NuxtAuthHandler } from "#auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { NuxtAuthHandler } from "#auth";
 
 export default NuxtAuthHandler({
     secret: process.env.AUTH_SECRET,
@@ -19,12 +19,12 @@ export default NuxtAuthHandler({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             async profile(profile: any) {
-                console.log("---profile---");
-                console.log("profile", profile);
+                // console.log("---profile---");
+                // console.log("profile", profile);
 
                 const email = profile.email;
                 const name = profile.name;
-                const avatar_url = profile.picture;
+                const avatarUrl = profile.picture;
 
                 const prisma = new PrismaClient();
 
@@ -33,7 +33,7 @@ export default NuxtAuthHandler({
                         id: true,
                     },
                     where: {
-                        email: email,
+                        email,
                     },
                 });
 
@@ -48,21 +48,22 @@ export default NuxtAuthHandler({
                             const user = await prisma.users.create({
                                 data: {
                                     id: userId,
-                                    email: email,
+                                    email,
                                 },
                             });
 
-                            const profile = await prisma.profiles.create({
+                            await prisma.profiles.create({
                                 data: {
                                     id: userId,
                                     username: name,
-                                    avatar_url,
+                                    // @ts-ignore
+                                    avatar_url: avatarUrl,
                                 },
                             });
                             return user;
                         });
                     } catch (e) {
-                        console.error(e);
+                        // console.error(e);
                         throw createError({
                             statusCode: 400,
                             statusMessage: "保存に失敗しました",
@@ -70,7 +71,7 @@ export default NuxtAuthHandler({
                     } finally {
                         prisma.$disconnect();
                     }
-                    console.log(createdUser);
+                    // console.log(createdUser);
 
                     profile.id = createdUser.id;
                 }
@@ -81,10 +82,7 @@ export default NuxtAuthHandler({
         }),
         CredentialsProvider.default({
             name: "Credentials",
-            async authorize(
-                credentials: Record<"username" | "password", string> | undefined,
-                req: any
-            ) {
+            async authorize(credentials: Record<"username" | "password", string> | undefined) {
                 const email = credentials?.username;
                 const plainPassword = credentials?.password || "";
 
@@ -124,7 +122,7 @@ export default NuxtAuthHandler({
                     });
                     return loginUser;
                 } catch (error: any) {
-                    console.error(error);
+                    // console.error(error);
                     throw createError({
                         statusCode: 400,
                         statusMessage: error?.message,
@@ -137,22 +135,24 @@ export default NuxtAuthHandler({
         // このコールバックは、JSON Web トークンが作成されるとき (つまり、サインイン時)、
         // または更新されるとき(つまり、クライアントでセッションがアクセスされるとき) に必ず呼び出されます。
         // 戻り値は暗号化され、Cookie に保存されます。
-        async jwt({ token, account, user }) {
-            console.log("---jwt---");
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        jwt({ token, account, user }) {
+            // console.log("---jwt---");
 
             if (user) {
                 token.userId = user.id;
             }
-            console.log("user", user);
-            console.log("account", account);
+            // console.log("user", user);
+            // console.log("account", account);
 
             // sessionにデータが渡される
             return token;
         },
         // セッションがチェックされるたびに呼び出されます。
         // デフォルトでは、セキュリティを強化するためにトークンのサブセットのみが返されます。
-        async session({ session, token, user }) {
-            console.log("---session---");
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        session({ session, token, user }) {
+            // console.log("---session---");
             (session as any).user.id = token.id;
             return session;
         },

@@ -27,7 +27,7 @@ export const useChatCompletionsStream = (messages: Ref<any>) => {
             });
 
             if (response.status !== 200) {
-                throw "エラーが発生しました";
+                throw new Error("エラーが発生しました");
             }
 
             const decoder = new TextDecoder("utf-8");
@@ -59,7 +59,8 @@ export const useChatCompletionsStream = (messages: Ref<any>) => {
 
             await read();
         } catch (error) {
-            throw error;
+            // // console.error(error);
+            return false;
         } finally {
             isStreaming.value = false;
         }

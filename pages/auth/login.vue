@@ -25,14 +25,14 @@ const handleLogin = async () => {
         });
 
         if (result?.error) {
-            throw Error(result.error);
+            throw new Error(result.error);
         }
 
         return navigateTo({
             path: "/",
         });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         toast.error("ログインに失敗しました");
     } finally {
         loading.value = false;

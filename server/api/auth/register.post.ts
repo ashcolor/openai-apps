@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
-import bcrypt from "bcrypt";
+import { PrismaClient } from "@prisma/client";
+import * as bcrypt from "bcrypt";
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
         });
 
         if (existingUser) {
-            throw Error("入力されたメールアドレスは使用されています");
+            throw new Error("入力されたメールアドレスは使用されています");
         }
 
         const saltRounds = 10;
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
         });
         return user;
     } catch (e: any) {
-        console.error(e.message);
+        // console.error(e.message);
         throw createError({
             statusCode: 400,
             statusMessage: e?.message || "",

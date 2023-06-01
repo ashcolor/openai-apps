@@ -59,7 +59,7 @@ const onClickLogout = async () => {
             </NuxtLink>
         </li>
         <li>
-            <a @click="onClickLogout()" class="py-4">
+            <a class="py-4" @click="onClickLogout()">
                 <div class="tooltip tooltip-right" data-tip="ログアウト">
                     <Icon name="material-symbols:logout" width="20" height="20"></Icon></div
             ></a>

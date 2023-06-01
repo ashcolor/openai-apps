@@ -49,13 +49,12 @@ export default defineEventHandler(async (event) => {
         });
         return result;
     } catch (e) {
-        console.error(e);
+        // console.error(e);
         throw createError({
             statusCode: 400,
             statusMessage: "保存に失敗しました",
         });
     } finally {
         prisma.$disconnect();
-        return [];
     }
 });
