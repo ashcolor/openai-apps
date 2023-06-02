@@ -5,9 +5,12 @@ export default defineEventHandler(async (event) => {
 
     if (path.indexOf("/api") === 0 && !path.includes("/api/auth")) {
         try {
+            const secret = process.env.AUTH_SECRET;
+            const secureCookie = import.meta.env.PROD as boolean;
             const token = await getToken({
                 event,
-                secureCookie: import.meta.env.PROD as boolean,
+                secret,
+                secureCookie,
             });
 
             const userId = token?.userId;
