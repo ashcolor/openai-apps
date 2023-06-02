@@ -1,4 +1,4 @@
-import { getToken, getServerSession } from "#auth";
+import { getToken } from "#auth";
 
 export default defineEventHandler(async (event) => {
     const path = event.path;
@@ -14,14 +14,7 @@ export default defineEventHandler(async (event) => {
                 secureCookie,
             });
 
-            // console.log("token", token);
-
             const userId = token?.userId;
-
-            // const session = await getServerSession(event);
-            // console.log("session", session);
-
-            // const userId = session?.user.id;
 
             if (!userId) {
                 throw new Error("unauthenticated!");
