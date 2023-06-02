@@ -12,7 +12,8 @@ async function main() {
             id: userId,
             email: "user@example.com",
             email_verified_at: null,
-            password: null,
+            // password
+            password: "$2b$10$go9iLM5KKkqCQ4lmqK4OKOui9CFyujeiVmnGmvY.TRiTuwYymJbr2",
             remember_token: null,
         },
     });
