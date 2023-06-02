@@ -1,19 +1,23 @@
-import { getToken } from "#auth";
+import { getServerSession } from "#auth";
 
 export default defineEventHandler(async (event) => {
     const path = event.path;
 
     if (path.indexOf("/api") === 0 && !path.includes("/api/auth")) {
         try {
-            const secret = process.env.AUTH_SECRET;
-            const secureCookie = import.meta.env.PROD as boolean;
-            const token = await getToken({
-                event,
-                secret,
-                secureCookie,
-            });
+            // TODO Vercel上ではtokenがnullになるためJWTの使用は保留
+            // const secret = process.env.AUTH_SECRET;
+            // const secureCookie = import.meta.env.PROD as boolean;
+            // const token = await getToken({
+            //     event,
+            //     secret,
+            //     secureCookie,
+            // });
 
-            const userId = token?.userId;
+            // const userId = token?.userId;
+
+            const session = await getServerSession(event);
+            const userId = session?.user.id;
 
             if (!userId) {
                 throw new Error("unauthenticated!");
