@@ -17,4 +17,7 @@ export default defineNuxtConfig({
     },
     // see @https://sidebase.io/nuxt-auth/configuration/nuxt-config
     auth: {},
+    eslint: {
+        lintOnStart: false,
+    },
 });
