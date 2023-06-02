@@ -5,12 +5,15 @@ export default defineEventHandler(async (event) => {
 
     if (path.indexOf("/api") === 0 && !path.includes("/api/auth")) {
         try {
-            const token = await getToken({ event });
+            const token = await getToken({
+                event,
+                secureCookie: import.meta.env.PROD as boolean,
+            });
 
             const userId = token?.userId;
 
             if (!userId) {
-                return { status: "unauthenticated!" };
+                throw new Error("unauthenticated!");
             }
 
             event.context.userId = userId;
@@ -18,7 +21,7 @@ export default defineEventHandler(async (event) => {
             // console.error(e);
             throw createError({
                 statusCode: 401,
-                statusMessage: "トークンが不正です",
+                statusMessage: e?.message || "エラーが発生しました",
             });
         }
     }
