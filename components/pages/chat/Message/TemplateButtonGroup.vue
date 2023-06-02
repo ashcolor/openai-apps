@@ -13,11 +13,12 @@ const { userMessageInput } = storeToRefs(systemStore);
 <template>
     <div class="shrink-0 flex flex-row gap-2 overflow-x-auto">
         <span
-            v-for="message in chat.Character.Templates"
+            v-for="template in chat.Character.Templates"
+            :key="template.id"
             class="btn btn-xs"
-            @click="userMessageInput = message.content"
+            @click="userMessageInput = template.content"
         >
-            {{ message.title }}
+            {{ template.title }}
         </span>
     </div>
 </template>

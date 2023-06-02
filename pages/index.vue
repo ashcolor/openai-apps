@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useChatStore } from "~~/stores/useChatStore";
-import { useCharacterStore } from "~~/stores/useCharacterStore";
 
 definePageMeta({
     middleware: ["auth"],
@@ -11,9 +10,6 @@ const currentView = ref<"chat" | "character">("chat");
 
 const chatStore = useChatStore();
 const { chat, selectedChatId } = storeToRefs(chatStore);
-
-const characterStore = useCharacterStore();
-const { character } = storeToRefs(characterStore);
 </script>
 
 <template>
@@ -29,11 +25,8 @@ const { character } = storeToRefs(characterStore);
             <ChatNewButton></ChatNewButton>
         </div>
 
-        <div v-else="currentView === 'character'" class="grow bg-base-200 flex flex-col">
-            <div
-                v-if="!chat?.character_id"
-                class="grow bg-base-200 flex flex-col place-content-center place-items-center gap-8"
-            >
+        <div v-else class="grow bg-base-200 flex flex-col">
+            <div v-if="!chat?.character_id" class="grow bg-base-200 grid place-">
                 <ChatCharacterSelectCardGroup></ChatCharacterSelectCardGroup>
             </div>
             <template v-else>
@@ -73,12 +66,7 @@ const { character } = storeToRefs(characterStore);
                 </div>
                 <div v-show="currentView === 'character'" class="grow min-h-0 p-4">
                     <div class="h-full flex flex-col">
-                        <div class="grow flex flex-row gap-8">
-                            <ChatCharacterDisplay
-                                v-show="character"
-                                class="grow"
-                            ></ChatCharacterDisplay>
-                        </div>
+                        <ChatCharacterDisplay v-show="chat.Character"></ChatCharacterDisplay>
                     </div>
                 </div>
             </template>

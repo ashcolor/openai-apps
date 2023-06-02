@@ -26,14 +26,14 @@ const keyDownEnter = (e: any) => {
 const keyUpEnter = (e: any) => {
     e.preventDefault();
 };
-const keyEnterShift = (e: any) => {};
+const keyEnterShift = () => {};
 </script>
 
 <template>
     <textarea
+        v-model="handleInput"
         class="textarea w-full"
         placeholder="文字を入力"
-        v-model="handleInput"
         @keydown.enter.exact="keyDownEnter"
         @keyup.enter.exact="keyUpEnter"
         @keydown.enter.shift="keyEnterShift"

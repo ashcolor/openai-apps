@@ -25,7 +25,7 @@ watch(fileData, async () => {
 <template>
     <div class="avatar cursor-pointer" @click="open()">
         <div class="w-48 rounded-full">
-            <img :src="src || DEFAULT_CHARACTER_AVATAR" />
+            <img :src="props.src || DEFAULT_CHARACTER_AVATAR" />
         </div>
     </div>
 </template>

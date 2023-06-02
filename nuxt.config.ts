@@ -7,6 +7,7 @@ export default defineNuxtConfig({
         "@nuxtjs/tailwindcss",
         "@sidebase/nuxt-auth",
         "nuxt-icon",
+        "@nuxtjs/eslint-module",
     ],
     components: {
         dirs: ["~/components/common", "~/components/pages", "~/components/parts"],
@@ -16,4 +17,7 @@ export default defineNuxtConfig({
     },
     // see @https://sidebase.io/nuxt-auth/configuration/nuxt-config
     auth: {},
+    eslint: {
+        lintOnStart: false,
+    },
 });

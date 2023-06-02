@@ -1,29 +1,31 @@
-import { getServerSession } from "#auth";
-import { getToken } from "next-auth/jwt";
+import { getToken } from "#auth";
 
 export default defineEventHandler(async (event) => {
     const path = event.path;
 
-    if (path.indexOf("/api") === 0 && path.indexOf("/api/auth") === -1) {
+    if (path.indexOf("/api") === 0 && !path.includes("/api/auth")) {
         try {
-            // TODO JWTからuserIdを取得したい
-            // nuxt-authのgetTokenではエラー、next-authの場合はデータが空になっている
-            // const req = event.node.req;
-            // const token = await getToken({ req });
-            // console.log("token", token);
+            // TODO Vercel上ではtokenがnullになるためJWTの使用は保留
+            const secret = process.env.AUTH_SECRET;
+            const secureCookie = import.meta.env.PROD as boolean;
+            const token = await getToken({
+                event,
+                secret,
+                secureCookie,
+            });
 
-            const session = await getServerSession(event);
-            const userId = session?.user.id;
+            const userId = token?.userId;
+
             if (!userId) {
-                return { status: "unauthenticated!" };
+                throw new Error("unauthenticated!");
             }
 
             event.context.userId = userId;
         } catch (e) {
-            console.error(e);
+            // console.error(e);
             throw createError({
                 statusCode: 401,
-                statusMessage: "トークンが不正です",
+                statusMessage: e?.message || "エラーが発生しました",
             });
         }
     }

@@ -7,7 +7,6 @@ definePageMeta({
     middleware: ["auth"],
 });
 
-const user = useSupabaseUser();
 const toast = useToast();
 
 const profileStore = useProfileStore();
@@ -17,15 +16,14 @@ const { refresh, patchProfile } = profileStore;
 const loading = ref(true);
 const openaiApiKey = ref("");
 const username = ref("");
-const website = ref("");
-const avatar_path = ref("");
+const avatarPath = ref("");
 
 await refresh();
+
 if (profile.value) {
     openaiApiKey.value = profile.value?.openai_api_key ?? "";
     username.value = profile.value?.username ?? "";
-    website.value = profile.value?.website ?? "";
-    avatar_path.value = profile.value?.avatar_url ?? "";
+    avatarPath.value = profile.value?.avatar_url ?? "";
 }
 
 loading.value = false;
@@ -36,13 +34,12 @@ const updateProfile = async () => {
         const body = {
             openai_api_key: openaiApiKey.value,
             username: username.value,
-            website: website.value,
-            avatar_url: avatar_path.value,
+            avatar_url: avatarPath.value,
         };
         await patchProfile(body);
         toast.info("保存しました");
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         toast.error("保存に失敗しました");
     } finally {
         loading.value = false;
@@ -61,31 +58,31 @@ const updateProfile = async () => {
                     <label class="label">
                         <span class="label-text">ユーザアイコン</span>
                     </label>
-                    <AvatarImgWithFileUpload v-model:src="avatar_path"></AvatarImgWithFileUpload>
+                    <AvatarImgWithFileUpload v-model:src="avatarPath"></AvatarImgWithFileUpload>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Email</span>
                     </label>
-                    <input id="email" type="text" :value="user.email" class="input" disabled />
+                    <input
+                        id="email"
+                        type="text"
+                        :value="profile?.User?.email"
+                        class="input"
+                        disabled
+                    />
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Username</span>
                     </label>
-                    <input type="text" class="input input-bordered" v-model="username" />
-                </div>
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Website</span>
-                    </label>
-                    <input type="text" class="input input-bordered" v-model="website" />
+                    <input v-model="username" type="text" class="input input-bordered" />
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">OpenAI API Key</span>
                     </label>
-                    <input type="text" class="input input-bordered" v-model="openaiApiKey" />
+                    <input v-model="openaiApiKey" type="text" class="input input-bordered" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
                     更新

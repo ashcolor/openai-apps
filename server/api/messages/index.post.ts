@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
         });
         return message;
     } catch (e) {
-        console.error(e);
+        // console.error(e);
         throw createError({
             statusCode: 400,
             statusMessage: "取得に失敗しました",

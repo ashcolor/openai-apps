@@ -25,18 +25,24 @@ const handleLogin = async () => {
         });
 
         if (result?.error) {
-            throw Error(result.error);
+            throw new Error(result.error);
         }
 
         return navigateTo({
             path: "/",
         });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         toast.error("ログインに失敗しました");
     } finally {
         loading.value = false;
     }
+};
+
+const handleGoogleLogin = async () => {
+    await signIn("google", {
+        callbackUrl: "/",
+    });
 };
 </script>
 
@@ -95,6 +101,15 @@ const handleLogin = async () => {
                         </div>
                     </div>
                 </form>
+                <div class="divider">または</div>
+
+                <div class="flex flex-col place-content-center">
+                    <div class="mx-auto">
+                        <button @click="handleGoogleLogin()">
+                            <img src="/img/btn_google_signin_light_normal.png" />
+                        </button>
+                    </div>
+                </div>
                 <div>
                     <span class="text-gray-500">アカウントを持っていない場合は&nbsp;</span>
                     <NuxtLink to="/auth/signup" class="link link-hover link-primary"

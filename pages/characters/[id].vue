@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { templates } from ".prisma/client";
 import { storeToRefs } from "pinia";
 import { useToast } from "vue-toastification";
 import { useCharacterStore } from "~~/stores/useCharacterStore";
@@ -102,7 +101,7 @@ const onClickDeleteTemplateButton = (index: number) => {
                         <span class="label-text">定型文</span>
                     </label>
                     <div class="space-y-2 overflow-auto">
-                        <div v-for="(template, index) in templates" class="">
+                        <div v-for="(template, index) in templates" :key="template.id"  class="">
                             <div class="input-group">
                                 <span>タイトル</span>
                                 <input

@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
         });
         return chat;
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         throw createError({
             statusCode: 400,
             statusMessage: "取得に失敗しました",

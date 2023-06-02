@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
 
     const messages = await prisma.messages.findMany({
         select: {
+            id: true,
             role: true,
             content: true,
         },

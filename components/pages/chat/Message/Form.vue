@@ -20,10 +20,10 @@ const onClickSend = () => {
         <div class="relative">
             <ChatMessageApiKeyCheckOverlay></ChatMessageApiKeyCheckOverlay>
             <ChatMessageTextarea
+                v-model="userMessageInput"
                 class="textarea w-full"
                 placeholder="Enterで送信"
-                v-model="userMessageInput"
-                @onKeyDownEnter="onClickSend"
+                @on-key-down-enter="onClickSend"
             ></ChatMessageTextarea>
         </div>
         <div class="w-full">

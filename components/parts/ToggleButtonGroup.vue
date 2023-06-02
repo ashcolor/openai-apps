@@ -1,9 +1,4 @@
 <script setup lang="ts">
-type ButtonProps = {
-    value: string;
-    label: string;
-};
-
 interface Props {
     list: Array<string>;
     modelValue: string;
@@ -15,7 +10,7 @@ interface Emits {
 }
 const emit = defineEmits<Emits>();
 
-const onClick = (value) => {
+const onClick = (value: any) => {
     emit("update:modelValue", value);
 };
 </script>
@@ -23,7 +18,8 @@ const onClick = (value) => {
     <div class="btn-group">
         <ToggleButton
             v-for="button in list"
-            :isActive="button === props.modelValue"
+            :key="button"
+            :is-active="button === props.modelValue"
             class="grow"
             @click="onClick(button)"
         >

@@ -1,12 +1,11 @@
 import { defineStore, storeToRefs } from "pinia";
 import { useChatsStore } from "~~/stores/useChatsStore";
 import { useChatStore } from "~~/stores/useChatStore";
-import { useCharacterStore } from "./useCharacterStore";
 
 export const useMessagesStore = defineStore("messages", () => {
     const chatsStore = useChatsStore();
     const chatStore = useChatStore();
-    const characterStore = useCharacterStore();
+    const { chat } = storeToRefs(chatStore);
 
     const {
         data: messages,
@@ -30,10 +29,10 @@ export const useMessagesStore = defineStore("messages", () => {
     } = useChatCompletionsStream(
         computed(() => {
             const requestMessages = [];
-            if (characterStore?.character?.prompt) {
+            if (chat.value?.Character?.prompt) {
                 requestMessages.push({
                     role: "system",
-                    content: characterStore?.character?.prompt,
+                    content: chat.value?.Character?.prompt,
                 });
             }
             if (messages.value?.length !== 0) {
@@ -44,7 +43,7 @@ export const useMessagesStore = defineStore("messages", () => {
     );
 
     const addMessage = async (role: string, content: string) => {
-        const message = await $fetch(`/api/messages`, {
+        await $fetch("/api/messages", {
             method: "POST",
             body: {
                 role,
@@ -68,7 +67,7 @@ export const useMessagesStore = defineStore("messages", () => {
     };
 
     const deleteAllMessages = async () => {
-        const message = await $fetch(`/api/chats/${chatStore.selectedChatId}/messages`, {
+        await $fetch(`/api/chats/${chatStore.selectedChatId}/messages`, {
             method: "DELETE",
         });
         await chatsStore.refresh();
