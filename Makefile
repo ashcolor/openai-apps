@@ -52,8 +52,15 @@ db:
 	docker compose exec db bash
 
 ##### Prisma #####
-migrate:
+# ローカル環境
+prisma-migrate:
 	prisma generate
 	prisma migrate dev
-seed:
+prisma-reset:
+	prisma migrate reset
+prisma-seed:
 	prisma db seed
+# 本番環境
+prisma-deploy:
+	prisma generate
+	prisma migrate deploy
