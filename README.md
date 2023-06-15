@@ -5,13 +5,13 @@ OpenAI API を使用したアプリケーション
 ## ドキュメント
 
 -   [NuxtJS 3](https://nuxt.com/)
+-   [Nuxt Auth](https://sidebase.io/nuxt-auth/getting-started)
 -   [Pinia](https://pinia.vuejs.org/core-concepts/)
 -   [tailwindcss](https://tailwindcss.com/)
 -   [daisyUI](https://daisyui.com/)
 -   [icones](https://icones.js.org/)
 -   [Vue Toastification](https://vue-toastification.maronato.dev/)
 -   [Prisma](https://www.prisma.io/docs)
--   [Nuxt Auth](https://sidebase.io/nuxt-auth/getting-started)
 -   [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
 
 ## 手順
