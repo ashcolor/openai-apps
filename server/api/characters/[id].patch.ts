@@ -46,6 +46,25 @@ export default defineEventHandler(async (event) => {
             await prisma.templates.createMany({
                 data: newTemplates,
             });
+
+            const character = await prisma.characters.findUnique({
+                select: {
+                    id: true,
+                    prompt: true,
+                    name: true,
+                    Templates: {
+                        select: {
+                            id: true,
+                            title: true,
+                            content: true,
+                        },
+                    },
+                },
+                where: {
+                    id,
+                },
+            });
+            return character;
         });
         return result;
     } catch (e) {
