@@ -2,7 +2,7 @@
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "~~/stores/useProfileStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
-import { useCharacterStore } from "~~/stores/useCharacterStore";
+import { useChatStore } from "~~/stores/useChatStore";
 import { nl2br } from "~/utils/utils";
 
 const profileStore = useProfileStore();
@@ -12,8 +12,8 @@ const messagesStore = useMessagesStore();
 const { messages, streamingMessage, isStreaming } = storeToRefs(messagesStore);
 const { sendMessage } = messagesStore;
 
-const characterStore = useCharacterStore();
-const { character } = storeToRefs(characterStore);
+const chatStore = useChatStore();
+const { chat } = storeToRefs(chatStore);
 
 const isEmpty = computed(() => {
     return messages?.value?.length === 0;
@@ -51,7 +51,7 @@ const chatClass = (role: string) => {
                 <div class="w-12 rounded-full">
                     <img
                         v-if="message.role === 'assistant'"
-                        :src="character?.avatar_src || DEFAULT_CHARACTER_AVATAR"
+                        :src="chat?.Character?.avatar_src || DEFAULT_CHARACTER_AVATAR"
                     />
                     <img v-else :src="profile?.avatar_url || DEFAULT_USER_AVATAR" />
                 </div>
@@ -61,7 +61,7 @@ const chatClass = (role: string) => {
         <div v-if="isStreaming || streamingMessage" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
-                    <img :src="character?.avatar_src || DEFAULT_CHARACTER_AVATAR" />
+                    <img :src="chat?.Character?.avatar_src || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
             <div v-if="streamingMessage" class="chat-bubble" v-html="nl2br(streamingMessage)"></div>
