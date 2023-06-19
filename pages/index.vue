@@ -26,7 +26,7 @@ const { chat, selectedChatId } = storeToRefs(chatStore);
         </div>
 
         <div v-else class="grow bg-base-200 flex flex-col">
-            <div v-if="!chat?.character_id" class="grow bg-base-200 grid place-">
+            <div v-if="!chat?.character_id" class="grow bg-base-200 overflow-y-scroll">
                 <ChatCharacterSelectCardGroup></ChatCharacterSelectCardGroup>
             </div>
             <template v-else>
