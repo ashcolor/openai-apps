@@ -7,7 +7,13 @@ export const useCharacterStore = defineStore("character", () => {
         data: character,
         pending,
         refresh,
-    } = useFetch<characters>(computed(() => `/api/characters/${selectedCharacterId.value}`));
+    } = useFetch<characters>(
+        computed(() => `/api/characters/${selectedCharacterId.value}`),
+        {
+            watch: false,
+            immediate: false,
+        }
+    );
 
     const patchCharacter = async (character: Object) => {
         await $fetch(`/api/characters/${selectedCharacterId.value}`, {

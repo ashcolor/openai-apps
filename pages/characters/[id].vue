@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useToast } from "vue-toastification";
+import { useCharactersStore } from "~/stores/useCharactersStore";
+import { useChatStore } from "~/stores/useChatStore";
+import { useChatsStore } from "~/stores/useChatsStore";
 import { useCharacterStore } from "~~/stores/useCharacterStore";
 
 definePageMeta({
@@ -12,8 +15,14 @@ const route = useRoute();
 const id = parseInt(route.params.id ?? "");
 
 const characterStore = useCharacterStore();
-const { selectedCharacterId, character } = storeToRefs(characterStore);
+const { selectedCharacterId, character, pending } = storeToRefs(characterStore);
 const { refresh, patchCharacter } = characterStore;
+const charactersStore = useCharactersStore();
+const { refresh: charactersRefresh } = charactersStore;
+const chatsStore = useChatsStore();
+const { refresh: chatsRefresh } = chatsStore;
+const chatStore = useChatStore();
+const { refresh: chatRefresh } = chatStore;
 
 selectedCharacterId.value = id;
 await refresh();
@@ -25,7 +34,7 @@ if (!character.value) {
 const name = ref<string>(character.value?.name ?? "");
 const avatarSrc = ref<string>(character.value?.avatar_src ?? "");
 const prompt = ref<string>(character.value?.prompt ?? "");
-const templates = ref<Array<Object>>(character.value.Templates);
+const templates = ref<Array<Object>>(character.value?.Templates ?? []);
 
 const onClickSave = async () => {
     try {
@@ -36,6 +45,9 @@ const onClickSave = async () => {
             templates: templates.value,
         });
         toast.info("保存しました");
+        await charactersRefresh();
+        await chatsRefresh();
+        await chatRefresh();
     } catch (e) {
         toast.error("保存に失敗しました");
     }
@@ -101,7 +113,7 @@ const onClickDeleteTemplateButton = (index: number) => {
                         <span class="label-text">定型文</span>
                     </label>
                     <div class="space-y-2 overflow-auto">
-                        <div v-for="(template, index) in templates" :key="template.id"  class="">
+                        <div v-for="(template, index) in templates" :key="template.id" class="">
                             <div class="input-group">
                                 <span>タイトル</span>
                                 <input
