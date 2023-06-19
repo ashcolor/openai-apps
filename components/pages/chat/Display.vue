@@ -20,7 +20,11 @@ const isEmpty = computed(() => {
 });
 
 const chatElement = ref<HTMLElement>();
-const { arrivedState, scrollBottom } = useScroll(chatElement, { behavior: "smooth" });
+const { arrivedState, scrollBottom } = useScroll(
+    chatElement
+    // TODO smoothの場合、スクロールが追従しなくなることがあった
+    // { behavior: "smooth" }
+);
 
 useMutationObserver(
     chatElement,
