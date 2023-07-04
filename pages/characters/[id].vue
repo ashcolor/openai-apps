@@ -12,10 +12,10 @@ definePageMeta({
 
 const toast = useToast();
 const route = useRoute();
-const id = parseInt(route.params.id ?? "");
+const id = parseInt(typeof route.params.id === "string" ? route.params.id : "");
 
 const characterStore = useCharacterStore();
-const { selectedCharacterId, character, pending } = storeToRefs(characterStore);
+const { selectedCharacterId, character } = storeToRefs(characterStore);
 const { refresh, patchCharacter } = characterStore;
 const charactersStore = useCharactersStore();
 const { refresh: charactersRefresh } = charactersStore;
