@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
 import { storeToRefs } from "pinia";
 import { useSystemStore } from "~~/stores/useSystemStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
+
+const toast = useToast();
 
 const systemStore = useSystemStore();
 const { userMessageInput } = storeToRefs(systemStore);
@@ -9,8 +12,12 @@ const { userMessageInput } = storeToRefs(systemStore);
 const messagesStore = useMessagesStore();
 const { sendMessage } = messagesStore;
 
-const onClickSend = () => {
-    sendMessage(userMessageInput.value);
+const onClickSend = async () => {
+    const response = await sendMessage(userMessageInput.value);
+    if (!response) {
+        toast.error("メッセージの取得に失敗しました");
+        return;
+    }
     userMessageInput.value = "";
 };
 </script>

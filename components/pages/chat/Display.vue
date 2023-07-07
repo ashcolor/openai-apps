@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "~~/stores/useProfileStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
 import { useChatStore } from "~~/stores/useChatStore";
 import { nl2br } from "~/utils/utils";
+
+const toast = useToast();
 
 const profileStore = useProfileStore();
 const { profile } = storeToRefs(profileStore);
@@ -41,6 +44,13 @@ useMutationObserver(
 const chatClass = (role: string) => {
     return role === "assistant" ? "chat-start" : "chat-end";
 };
+
+const onClickStartChatButton = async () => {
+    const response = await sendMessage("");
+    if (!response) {
+        toast.error("メッセージの取得に失敗しました");
+    }
+};
 </script>
 
 <template>
@@ -75,6 +85,6 @@ const chatClass = (role: string) => {
         </div>
     </div>
     <div v-show="isEmpty" class="w-full h-full grid place-items-center">
-        <button class="btn btn-wide" @click="sendMessage('')">会話をはじめる</button>
+        <button class="btn btn-wide" @click="onClickStartChatButton()">会話をはじめる</button>
     </div>
 </template>

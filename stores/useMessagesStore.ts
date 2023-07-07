@@ -60,10 +60,14 @@ export const useMessagesStore = defineStore("messages", () => {
         await addMessage("user", content);
 
         await streamExecute();
-        const tmpMessage = streamingMessage.value;
 
-        await addMessage("assistant", tmpMessage);
+        if (streamingMessage.value === "") {
+            return false;
+        }
+
+        await addMessage("assistant", streamingMessage.value);
         streamingMessage.value = "";
+        return true;
     };
 
     const deleteAllMessages = async () => {
