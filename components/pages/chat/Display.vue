@@ -85,6 +85,8 @@ const onClickStartChatButton = async () => {
         </div>
     </div>
     <div v-show="isEmpty" class="w-full h-full grid place-items-center">
-        <button class="btn btn-wide" @click="onClickStartChatButton()">会話をはじめる</button>
+        <button class="btn btn-wide btn-primary" @click="onClickStartChatButton()">
+            会話をはじめる
+        </button>
     </div>
 </template>
