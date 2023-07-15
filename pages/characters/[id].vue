@@ -145,7 +145,11 @@ const onClickDeleteTemplateButton = (index: number) => {
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn w-full" @click="onClickSave(character.id)">
+                    <button
+                        type="button"
+                        class="btn btn-primary w-full"
+                        @click="onClickSave(character.id)"
+                    >
                         保存
                     </button>
                 </div>

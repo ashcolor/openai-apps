@@ -34,7 +34,7 @@ const onClickSend = async () => {
             ></ChatMessageTextarea>
         </div>
         <div class="w-full">
-            <button class="btn btn-sm w-full" @click="onClickSend">送信</button>
+            <button class="btn btn-sm w-full btn-primary" @click="onClickSend">送信</button>
         </div>
     </div>
 </template>

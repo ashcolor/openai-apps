@@ -19,7 +19,7 @@ const { characters } = storeToRefs(charactersStore);
         <div class="flex flex-row place-content-between">
             <div></div>
             <div>
-                <button class="btn" @click="addCharacter()">新規作成</button>
+                <button class="btn btn-primary" @click="addCharacter()">新規作成</button>
             </div>
         </div>
         <div class="border-2">
