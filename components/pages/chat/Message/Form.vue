@@ -13,12 +13,14 @@ const messagesStore = useMessagesStore();
 const { sendMessage } = messagesStore;
 
 const onClickSend = async () => {
-    const response = await sendMessage(userMessageInput.value);
+    const tmpMessage = userMessageInput.value;
+    userMessageInput.value = "";
+
+    const response = await sendMessage(tmpMessage);
     if (!response) {
         toast.error("メッセージの取得に失敗しました");
-        return;
+        userMessageInput.value = tmpMessage;
     }
-    userMessageInput.value = "";
 };
 </script>
 
