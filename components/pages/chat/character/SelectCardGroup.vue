@@ -10,7 +10,7 @@ const { characters } = storeToRefs(charactersStore);
 </script>
 
 <template>
-    <div class="flex flex-col place-content-center place-items-center gap-8">
+    <div class="flex flex-col justify-center items-center gap-8 h-full">
         <div
             v-for="character in characters"
             :key="character.id"
@@ -25,7 +25,7 @@ const { characters } = storeToRefs(charactersStore);
                     </div>
                     <h2 class="card-title">{{ character.name }}</h2>
                 </div>
-                <p>{{ character.prompt }}</p>
+                <p>{{ character.prompt.substring(0, 100) }}</p>
                 <div class="card-actions justify-end">
                     <button class="btn btn-primary" @click="setCharacter(character.id)">
                         会話をはじめる

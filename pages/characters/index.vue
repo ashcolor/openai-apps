@@ -45,7 +45,7 @@ const { characters } = storeToRefs(charactersStore);
                                 </div>
                             </div>
                         </td>
-                        <td>{{ character.name }}</td>
+                        <td class="whitespace-nowrap">{{ character.name }}</td>
                         <td class="truncate">{{ character.prompt }}</td>
                         <td>
                             <NuxtLink :to="`/characters/${character.id}`">
