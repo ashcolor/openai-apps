@@ -14,7 +14,6 @@ const { profile } = storeToRefs(profileStore);
 const { refresh, patchProfile } = profileStore;
 
 const loading = ref(true);
-const openaiApiKey = ref("");
 const username = ref("");
 const avatarPath = ref("");
 
