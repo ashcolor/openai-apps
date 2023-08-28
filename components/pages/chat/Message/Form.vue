@@ -26,15 +26,12 @@ const onClickSend = async () => {
 
 <template>
     <div class="flex flex-col">
-        <div class="relative">
-            <ChatMessageApiKeyCheckOverlay></ChatMessageApiKeyCheckOverlay>
-            <ChatMessageTextarea
-                v-model="userMessageInput"
-                class="textarea w-full"
-                placeholder="Enterで送信"
-                @on-key-down-enter="onClickSend"
-            ></ChatMessageTextarea>
-        </div>
+        <ChatMessageTextarea
+            v-model="userMessageInput"
+            class="textarea w-full"
+            placeholder="Enterで送信"
+            @on-key-down-enter="onClickSend"
+        ></ChatMessageTextarea>
         <div class="w-full">
             <button class="btn btn-sm w-full btn-primary" @click="onClickSend">送信</button>
         </div>

@@ -71,12 +71,11 @@ model messages {
 }
 
 model profiles {
-    id             String    @id @unique @postgres.Uuid
-    created_at     DateTime  @default(now()) @postgres.Timestamptz(6)
-    updated_at     DateTime? @default(now()) @postgres.Timestamptz(6)
-    username       String?   @unique
-    avatar_url     String?
-    openai_api_key String?
+    id         String    @id @unique @postgres.Uuid
+    created_at DateTime  @default(now()) @postgres.Timestamptz(6)
+    updated_at DateTime? @default(now()) @postgres.Timestamptz(6)
+    username   String?   @unique
+    avatar_url String?
 
     User users @relation(fields: [id], references: [id])
 
