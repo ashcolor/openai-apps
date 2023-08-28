@@ -38,7 +38,11 @@ make dev
 npx prisma migrate dev --name init
 ```
 
+シード
+
+```bash
 npx prisma seed
+```
 
 ### デプロイ
 
