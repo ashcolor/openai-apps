@@ -35,8 +35,10 @@ make dev
 マイグレーション
 
 ```bash
-prisma migrate dev --name init
+npx prisma migrate dev --name init
 ```
+
+npx prisma seed
 
 ### デプロイ
 
