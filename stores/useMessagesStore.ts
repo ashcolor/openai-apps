@@ -38,7 +38,7 @@ export const useMessagesStore = defineStore("messages", () => {
             if (messages.value?.length !== 0) {
                 messages.value?.map(({ role, content }) => requestMessages.push({ role, content }));
             }
-            return requestMessages;
+            return requestMessages.slice(requestMessages.length - 10);
         })
     );
 
