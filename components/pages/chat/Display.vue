@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
 import { storeToRefs } from "pinia";
 import { useProfileStore } from "~~/stores/useProfileStore";
 import { useMessagesStore } from "~~/stores/useMessagesStore";
-import { useCharacterStore } from "~~/stores/useCharacterStore";
+import { useChatStore } from "~~/stores/useChatStore";
 import { nl2br } from "~/utils/utils";
+
+const toast = useToast();
 
 const profileStore = useProfileStore();
 const { profile } = storeToRefs(profileStore);
@@ -12,15 +15,19 @@ const messagesStore = useMessagesStore();
 const { messages, streamingMessage, isStreaming } = storeToRefs(messagesStore);
 const { sendMessage } = messagesStore;
 
-const characterStore = useCharacterStore();
-const { character } = storeToRefs(characterStore);
+const chatStore = useChatStore();
+const { chat } = storeToRefs(chatStore);
 
 const isEmpty = computed(() => {
     return messages?.value?.length === 0;
 });
 
 const chatElement = ref<HTMLElement>();
-const { arrivedState, scrollBottom } = useScroll(chatElement, { behavior: "smooth" });
+const { arrivedState, scrollBottom } = useScroll(
+    chatElement
+    // TODO smoothの場合、スクロールが追従しなくなることがあった
+    // { behavior: "smooth" }
+);
 
 useMutationObserver(
     chatElement,
@@ -37,6 +44,13 @@ useMutationObserver(
 const chatClass = (role: string) => {
     return role === "assistant" ? "chat-start" : "chat-end";
 };
+
+const onClickStartChatButton = async () => {
+    const response = await sendMessage("");
+    if (!response) {
+        toast.error("メッセージの取得に失敗しました");
+    }
+};
 </script>
 
 <template>
@@ -51,7 +65,7 @@ const chatClass = (role: string) => {
                 <div class="w-12 rounded-full">
                     <img
                         v-if="message.role === 'assistant'"
-                        :src="character?.avatar_src || DEFAULT_CHARACTER_AVATAR"
+                        :src="chat?.Character?.avatar_src || DEFAULT_CHARACTER_AVATAR"
                     />
                     <img v-else :src="profile?.avatar_url || DEFAULT_USER_AVATAR" />
                 </div>
@@ -61,7 +75,7 @@ const chatClass = (role: string) => {
         <div v-if="isStreaming || streamingMessage" class="chat" :class="chatClass('assistant')">
             <div class="chat-image avatar">
                 <div class="w-12 rounded-full">
-                    <img :src="character?.avatar_src || DEFAULT_CHARACTER_AVATAR" />
+                    <img :src="chat?.Character?.avatar_src || DEFAULT_CHARACTER_AVATAR" />
                 </div>
             </div>
             <div v-if="streamingMessage" class="chat-bubble" v-html="nl2br(streamingMessage)"></div>
@@ -71,6 +85,8 @@ const chatClass = (role: string) => {
         </div>
     </div>
     <div v-show="isEmpty" class="w-full h-full grid place-items-center">
-        <button class="btn btn-wide" @click="sendMessage('')">会話をはじめる</button>
+        <button class="btn btn-wide btn-primary" @click="onClickStartChatButton()">
+            会話をはじめる
+        </button>
     </div>
 </template>

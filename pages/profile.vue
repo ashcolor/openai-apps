@@ -14,14 +14,12 @@ const { profile } = storeToRefs(profileStore);
 const { refresh, patchProfile } = profileStore;
 
 const loading = ref(true);
-const openaiApiKey = ref("");
 const username = ref("");
 const avatarPath = ref("");
 
 await refresh();
 
 if (profile.value) {
-    openaiApiKey.value = profile.value?.openai_api_key ?? "";
     username.value = profile.value?.username ?? "";
     avatarPath.value = profile.value?.avatar_url ?? "";
 }
@@ -32,7 +30,6 @@ const updateProfile = async () => {
     try {
         loading.value = true;
         const body = {
-            openai_api_key: openaiApiKey.value,
             username: username.value,
             avatar_url: avatarPath.value,
         };
@@ -77,12 +74,6 @@ const updateProfile = async () => {
                         <span class="label-text">Username</span>
                     </label>
                     <input v-model="username" type="text" class="input input-bordered" />
-                </div>
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">OpenAI API Key</span>
-                    </label>
-                    <input v-model="openaiApiKey" type="text" class="input input-bordered" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
                     更新

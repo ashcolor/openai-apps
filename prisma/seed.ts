@@ -25,7 +25,6 @@ async function main() {
             id: userId,
             username: "ユーザ",
             avatar_url: "https://placehold.jp/24x24.png",
-            openai_api_key: process.env.SEED_OPENAI_API_KEY || "",
         },
     });
 

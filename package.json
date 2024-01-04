@@ -1,47 +1,62 @@
 {
   "private": true,
+  "lint-staged": {
+    "*.{ts,js,vue}": [
+      "pnpm format",
+      "pnpm lint:fix"
+    ]
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "format": "prettier --write ./**/*.{ts,js,vue}",
+    "format:check": "prettier --check ./**/*.{ts,js,vue}",
     "lint": "eslint --ext .ts,.js,.vue .",
-    "lint:fix": "eslint --ext .ts,.js,.vue . --fix"
+    "lint:fix": "eslint --ext .ts,.js,.vue . --fix",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
   },
   "prisma": {
-    "seed": "yarn ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "pnpm ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^0.4.1",
+    "@nuxt/devtools": "^0.6.7",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/eslint-module": "^4.1.0",
-    "@nuxtjs/tailwindcss": "^6.6.6",
-    "@sidebase/nuxt-auth": "^0.6.0-beta.2",
+    "@nuxtjs/tailwindcss": "^6.8.0",
+    "@sidebase/nuxt-auth": "^0.6.0-beta.3",
     "@tailwindcss/typography": "^0.5.9",
     "@types/bcrypt": "^5.0.0",
-    "@types/node": "^18.16.0",
-    "@vueuse/core": "^10.0.2",
-    "@vueuse/nuxt": "^10.0.2",
-    "eslint": "^8.41.0",
+    "@types/node": "^20.5.7",
+    "@vueuse/core": "^10.2.1",
+    "@vueuse/nuxt": "^10.2.1",
+    "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
-    "next-auth": "4.22.0",
-    "nuxt": "^3.4.2",
-    "nuxt-icon": "^0.3.3",
-    "postcss-custom-properties": "^13.1.5",
-    "sass": "^1.58.0",
-    "tailwindcss": "^3.3.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "next-auth": "4.22.1",
+    "nuxt": "^3.7.0",
+    "nuxt-icon": "^0.4.2",
+    "postcss-custom-properties": "^13.2.1",
+    "prettier": "^3.1.1",
+    "sass": "^1.63.6",
+    "tailwindcss": "^3.3.3",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.4.9",
-    "@prisma/client": "^4.13.0",
+    "@pinia/nuxt": "^0.4.11",
+    "@prisma/client": "^5.2.0",
+    "ai": "^2.2.9",
     "bcrypt": "^5.1.0",
-    "daisyui": "^2.51.5",
-    "openai": "^3.2.1",
-    "pinia": "^2.0.35",
-    "prisma": "^4.13.0",
+    "daisyui": "^3.2.1",
+    "openai": "^4.3.0",
+    "pinia": "^2.1.4",
+    "prisma": "^5.2.0",
     "vue-toastification": "^2.0.0-rc.5"
-  }
+  },
+  "packageManager": "pnpm@8.14.0+sha256.9cebf61abd83f68177b29484da72da9751390eaad46dfc3072d266bfbb1ba7bf"
 }

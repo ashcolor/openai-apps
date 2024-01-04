@@ -4,7 +4,7 @@ init:
 ifeq ("$(wildcard .env)", "")
 	cp .env.example .env
 endif
-	yarn install
+	pnpm install
 	docker compose up -d --build db
 	sleep 30
 	@make migrate
@@ -12,11 +12,11 @@ endif
 
 dev:
 	@make up
-	yarn dev
+	pnpm dev
 	prisma studio
 
 deploy:
-	yarn build
+	pnpm build
 	@make migrate
 
 ##### Docker #####
@@ -52,8 +52,15 @@ db:
 	docker compose exec db bash
 
 ##### Prisma #####
-migrate:
+# ローカル環境
+prisma-migrate:
 	prisma generate
 	prisma migrate dev
-seed:
+prisma-reset:
+	prisma migrate reset
+prisma-seed:
 	prisma db seed
+# 本番環境
+prisma-deploy:
+	prisma generate
+	prisma migrate deploy

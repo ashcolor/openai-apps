@@ -1,3 +1,6 @@
+-- CreateSchema
+CREATE SCHEMA IF NOT EXISTS "auth";
+
 -- CreateTable
 CREATE TABLE "public"."characters" (
     "id" SERIAL NOT NULL,
@@ -55,13 +58,31 @@ CREATE TABLE "public"."profiles" (
     "updated_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
     "username" TEXT,
     "avatar_url" TEXT,
-    "openai_api_key" TEXT,
 
     CONSTRAINT "profiles_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "auth"."users" (
+    "id" UUID NOT NULL,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
+    "email" TEXT NOT NULL,
+    "email_verified_at" TIMESTAMPTZ(6),
+    "password" TEXT,
+    "remember_token" TEXT,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "profiles_id_key" ON "public"."profiles"("id");
+
 -- CreateIndex
 CREATE UNIQUE INDEX "profiles_username_key" ON "public"."profiles"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "auth"."users"("email");
 
 -- AddForeignKey
 ALTER TABLE "public"."templates" ADD CONSTRAINT "templates_character_id_fkey" FOREIGN KEY ("character_id") REFERENCES "public"."characters"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -71,3 +92,6 @@ ALTER TABLE "public"."chats" ADD CONSTRAINT "chats_character_id_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "public"."messages" ADD CONSTRAINT "messages_chat_id_fkey" FOREIGN KEY ("chat_id") REFERENCES "public"."chats"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."profiles" ADD CONSTRAINT "profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

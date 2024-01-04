@@ -8,7 +8,6 @@ export default defineEventHandler(async (event) => {
     const profile = await prisma.profiles.findFirst({
         select: {
             id: true,
-            openai_api_key: true,
             avatar_url: true,
             username: true,
             User: {

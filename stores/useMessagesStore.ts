@@ -38,7 +38,7 @@ export const useMessagesStore = defineStore("messages", () => {
             if (messages.value?.length !== 0) {
                 messages.value?.map(({ role, content }) => requestMessages.push({ role, content }));
             }
-            return requestMessages;
+            return requestMessages.slice(requestMessages.length - 10);
         })
     );
 
@@ -60,10 +60,14 @@ export const useMessagesStore = defineStore("messages", () => {
         await addMessage("user", content);
 
         await streamExecute();
-        const tmpMessage = streamingMessage.value;
 
-        await addMessage("assistant", tmpMessage);
+        if (streamingMessage.value === "") {
+            return false;
+        }
+
+        await addMessage("assistant", streamingMessage.value);
         streamingMessage.value = "";
+        return true;
     };
 
     const deleteAllMessages = async () => {
