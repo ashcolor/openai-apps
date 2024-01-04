@@ -10,7 +10,7 @@
     "lint:fix": "eslint --ext .ts,.js,.vue . --fix"
   },
   "prisma": {
-    "seed": "yarn ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "pnpm ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.6.7",
@@ -44,5 +44,6 @@
     "pinia": "^2.1.4",
     "prisma": "^5.2.0",
     "vue-toastification": "^2.0.0-rc.5"
-  }
+  },
+  "packageManager": "pnpm@8.14.0+sha256.9cebf61abd83f68177b29484da72da9751390eaad46dfc3072d266bfbb1ba7bf"
 }
