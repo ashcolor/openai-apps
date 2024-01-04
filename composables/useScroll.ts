@@ -1,6 +1,5 @@
-import { useScroll as useVueUseScroll , UseScrollOptions } from "@vueuse/core";
+import { useScroll as useVueUseScroll, UseScrollOptions } from "@vueuse/core";
 import type { MaybeRefOrGetter } from "@vueuse/shared";
-
 
 export function useScroll(
     element: MaybeRefOrGetter<HTMLElement | SVGElement | Window | Document | null | undefined>,
