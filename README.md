@@ -1,4 +1,4 @@
-# OpenAi API Apps
+# OpenAI API Apps
 
 OpenAI API を使用したアプリケーション
 
@@ -9,7 +9,7 @@ OpenAI API を使用したアプリケーション
 -   [Pinia](https://pinia.vuejs.org/core-concepts/)
 -   [tailwindcss](https://tailwindcss.com/)
 -   [daisyUI](https://daisyui.com/)
--   [icones](https://icones.js.org/)
+-   [iconify](https://iconify.design/)
 -   [Vue Toastification](https://vue-toastification.maronato.dev/)
 -   [Prisma](https://www.prisma.io/docs)
 -   [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
